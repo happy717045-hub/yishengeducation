@@ -4,7 +4,7 @@ const { checkPassword, passwordConfigured, storeReady, saveConfig, validShape, s
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") return res.status(405).json({ error: "method" });
-  if (!passwordConfigured() || !storeReady()) return res.status(503).json({ ok: false, error: "not_configured" });
+  if (!passwordConfigured() || !storeReady()) return res.status(503).json({ ok: false, error: "not_configured", reason: !passwordConfigured() ? "no_password" : "no_store" });
   const body = req.body && typeof req.body === "object" ? req.body : {};
   if (!checkPassword(body.password)) {
     await sleep(700);

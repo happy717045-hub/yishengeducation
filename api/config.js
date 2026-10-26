@@ -4,10 +4,10 @@ const { loadConfig, storeReady } = require("./_lib");
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "GET") return res.status(405).json({ error: "method" });
-  if (!storeReady()) return res.status(200).json({ config: null, store: false });
+  if (!storeReady()) return res.status(200).json({ config: null, store: false, reason: "no_env" });
   try {
     return res.status(200).json({ config: await loadConfig(), store: true });
   } catch (e) {
-    return res.status(200).json({ config: null, store: false });
+    return res.status(200).json({ config: null, store: false, reason: String((e && e.message) || "error").slice(0, 60) });
   }
 };
