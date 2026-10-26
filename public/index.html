@@ -1,0 +1,1471 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>弈生圍棋教室 寒暑假課程試算</title><meta name="description" content="弈生圍棋教室寒暑假課程費用試算：選好上課日期，馬上看到費用與優惠。"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap"></head><body><style>
+/* 版面：左欄＝會員名稱＋課程菜單＋週曆，右欄＝黏附的費用明細；窄螢幕改單欄，底部固定合計列。
+   圖像語彙：棋子（上午＝黑子、下午＝白子、才藝＝黃子）與菜單式的虛線引導點。 */
+:root{
+  --bg:#E6E6E8; --surface:#FFFFFF; --field:#FFFFFF; --ink:#111214; --muted:#4B515A; --line:#CBCED4;
+  --dots:#6F9CC9; --dashed:#9AA3AE; --grid:rgba(255,255,255,.45); --scrim:rgba(255,255,255,.78);
+  --alert:#C62828; --accent:#1560A2; --accent-bg:#FFEBB0; --board:#F7B731;
+  --good:#1D6847; --good-bg:#DCEEE3; --danger:#B3261E;
+  --blue:#1560A2; --yellow:#F7B731; --coral:#C94334; --pill-bg:#111214; --pill-ink:#FFFFFF;
+  --stone-b:#111214; --stone-b-ink:#FFFFFF; --stone-b-edge:#111214;
+  --stone-w:#FFFFFF; --stone-w-ink:#111214; --stone-ring:#8E959E;
+  --f-display:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1822; --surface:#14283A; --field:#0D1822; --ink:#F1F4F8; --muted:#A9B7C6; --line:#2B4257;
+    --dots:#4F7BA6; --dashed:#4F6479; --grid:rgba(255,255,255,.06); --scrim:rgba(20,40,58,.8);
+    --alert:#FF8A7A; --accent:#F7B731; --accent-bg:#3A3012; --board:#4A3A10;
+    --good:#7ED0A6; --good-bg:#17301F; --danger:#FF8A7A;
+    --blue:#1F6FB5; --yellow:#F7B731; --coral:#FF9A8B; --pill-bg:#F7B731; --pill-ink:#111214;
+    --stone-b:#050706; --stone-b-ink:#EAEEE7; --stone-b-edge:#8795A3;
+    --stone-w:#EEF1F5; --stone-w-ink:#111214; --stone-ring:#EEF1F5;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1822; --surface:#14283A; --field:#0D1822; --ink:#F1F4F8; --muted:#A9B7C6; --line:#2B4257;
+  --dots:#4F7BA6; --dashed:#4F6479; --grid:rgba(255,255,255,.06); --scrim:rgba(20,40,58,.8);
+  --alert:#FF8A7A; --accent:#F7B731; --accent-bg:#3A3012; --board:#4A3A10;
+  --good:#7ED0A6; --good-bg:#17301F; --danger:#FF8A7A;
+  --blue:#1F6FB5; --yellow:#F7B731; --coral:#FF9A8B; --pill-bg:#F7B731; --pill-ink:#111214;
+  --stone-b:#050706; --stone-b-ink:#EAEEE7; --stone-b-edge:#8795A3;
+  --stone-w:#EEF1F5; --stone-w-ink:#111214; --stone-ring:#EEF1F5;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.3;text-wrap:balance;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:16px;padding-block:20px 120px}
+
+/* 頁首：棋盤格線底，可換成自己的背景圖（加淡色遮罩讓文字清楚） */
+.top{border:1px solid var(--line);background-color:var(--surface);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;padding:22px 20px;display:flex;flex-direction:column;gap:8px}
+.top.hasbg{background-size:cover;background-position:center;background-repeat:no-repeat}
+.eyebrow{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700}
+.top h1{font-size:clamp(26px,5.5vw,36px)}
+.lead{color:var(--muted);max-width:40em}
+.top.hasbg .lead{color:var(--ink)}
+.demo{width:fit-content;max-width:100%;background:var(--accent-bg);color:var(--accent);font-size:13px;padding:4px 10px;border-radius:4px}
+
+.seasons{display:flex;flex-wrap:wrap;gap:8px;margin-block:16px}
+.tab{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:8px 14px;border:1px solid var(--line);background:var(--surface);border-radius:6px;cursor:pointer;min-height:44px}
+.tab small{font-size:12px;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab[aria-selected="true"] small{color:var(--bg);opacity:.8}
+
+.layout{display:grid;gap:24px;grid-template-columns:minmax(0,1fr)}
+.main{display:flex;flex-direction:column;gap:30px;min-width:0}
+.sec h2{font-size:19px}
+.sub{color:var(--muted);font-size:13.5px;margin-top:2px}
+.member{display:flex;flex-direction:column;gap:6px}
+.member input{max-width:360px}
+
+/* 菜單 */
+.menucols{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:12px}
+.mcol h3{font-size:15px;display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.mcol h3{flex-wrap:wrap}.hl{margin-top:12px;font-size:16px;font-weight:700;color:var(--alert);background:none;padding:0;line-height:1.5;animation:blink 1.4s ease-in-out infinite}@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}.mcol h3 small{font-family:var(--f-body);font-weight:400;font-size:12.5px;color:var(--muted)}
+.item{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;width:100%;text-align:left;padding:10px 8px;border:1px solid transparent;border-bottom-color:var(--line);background:transparent;border-radius:6px}
+.item.on{background:var(--accent-bg);border-color:var(--accent)}
+.itbody{display:flex;flex-direction:column;min-width:0}
+.per{font-size:12.5px;color:var(--muted)}
+.empty{color:var(--muted);font-size:13.5px;padding:8px 0}
+
+.row{display:flex;align-items:baseline;gap:8px}
+.row .lbl{min-width:0;overflow-wrap:anywhere;font-weight:500}
+.dots{flex:1 1 12px;min-width:12px;border-bottom:2px dotted var(--dots);transform:translateY(-4px)}
+.amt{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+
+/* 棋子 */
+.stone{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;font-size:12px;font-weight:700;line-height:1;letter-spacing:0}
+.stone{white-space:nowrap}
+.early{margin-top:12px}.early .disc,.early .disc:last-child{border:0;background:none;padding:0;margin:0}.early .disc .lbl,.early .disc .amt{font-weight:800;color:var(--ink)}
+.stone.b{background:var(--stone-b);color:var(--stone-b-ink);box-shadow:inset 0 0 0 1.5px var(--stone-b-edge)}
+.stone.w{background:var(--stone-w);color:var(--stone-w-ink);box-shadow:inset 0 0 0 1.5px var(--stone-ring)}
+.stone.x{background:var(--accent-bg);color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.stone.e{background:transparent;color:var(--muted);box-shadow:none;border:1.5px dashed var(--dashed);font-weight:400}
+
+/* 日曆 */
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.note{background:var(--accent-bg);color:var(--accent);font-size:13px;padding:8px 12px;border-radius:6px;margin-top:12px}
+.weeks{display:flex;flex-direction:column;gap:18px;margin-top:14px}
+.week{display:flex;flex-direction:column;gap:6px}
+.weekhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.days{display:grid;gap:4px}
+.day{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:4px 2px;display:flex;flex-direction:column;align-items:center;min-width:0}
+.day.void{border:0;background:transparent}
+.dtop{display:flex;justify-content:space-between;width:100%;padding-inline:4px;font-size:11px;color:var(--muted)}
+.dtop .dd{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.day.closed{background-color:var(--bg);background-image:repeating-linear-gradient(135deg,transparent 0 6px,var(--line) 6px 7px);color:var(--muted)}
+.cl{font-size:12px;padding:16px 2px;text-align:center}
+.slot{display:grid;place-items:center;width:100%;min-height:40px;border:0;background:transparent;border-radius:6px;cursor:pointer;padding:2px 0}
+.slot:hover:not(:disabled){background:var(--bg)}
+.slot:disabled{cursor:not-allowed;opacity:.5}
+.slot .stone{width:30px;height:30px}
+.shut{display:grid;place-items:center;width:100%;min-height:40px;border-radius:6px;font-size:12px;color:var(--muted);background-image:repeating-linear-gradient(135deg,transparent 0 6px,var(--line) 6px 7px)}
+.xwide{grid-column:1/-1}
+.xgrid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(var(--rows),auto);grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}
+@media (max-width:640px){.xgrid{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:minmax(0,1fr)}}
+.offer{font-size:11px;line-height:1.2;color:var(--muted);text-align:center;padding:2px;word-break:keep-all}
+.dnote{font-size:11px;line-height:1.3;color:var(--accent);text-align:center;padding:0 2px 3px;font-weight:700}
+.dayadm{display:flex;flex-direction:column;gap:6px}
+.drow{border:1px solid var(--line);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;background:var(--bg)}
+.drow .dhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.dgrp{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px}
+.dgrp > .lbl2{min-width:4.5em;font-size:12.5px;color:var(--muted)}
+.dgrp small{font-size:12px;color:var(--muted)}
+
+/* 費用 */
+.quote{border:1px solid var(--line);background:var(--surface);padding:18px;border-radius:8px;min-width:0}
+.quote h2{font-size:20px}
+.quote h3{font-family:var(--f-body);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--muted);margin:18px 0 6px}
+.lines{display:flex;flex-direction:column;gap:6px}
+.subtotal{margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+.disc{display:flex;flex-direction:column;gap:2px;padding:8px 0;border-bottom:1px solid var(--line)}
+.disc:last-child{border-bottom:0}
+.disc .d{font-size:12.5px;color:var(--muted)}
+.disc .h{font-size:12.5px;color:var(--muted)}
+.disc.applied .h{color:var(--good);font-weight:700}
+.disc.applied .amt{color:var(--good)}
+.tag{display:inline-block;font-size:11px;padding:0 6px;border:1px solid var(--line);border-radius:3px;color:var(--muted);margin-left:6px;vertical-align:1px}
+.dsplit{display:grid;grid-template-columns:1fr 1fr;width:100%}@media (max-width:560px){.dsplit .slot .stone{width:25px;height:25px;font-size:11px}}.plan{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.planbtn{min-height:44px;border:1px solid var(--line);background:var(--surface);border-radius:6px;font-weight:700;cursor:pointer}.planbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.tierbox{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:var(--bg)}.others{margin-top:12px}.tiers{list-style:none;margin:4px 0 2px;padding:0;display:flex;flex-direction:column;gap:2px;font-size:12.5px;color:var(--muted)}
+.tiers li{display:flex;gap:8px;align-items:baseline}
+.tiers li::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--dashed);flex:none;transform:translateY(-1px)}
+.tiers li.on{color:var(--ink);font-weight:700}
+.tiers li.on::before{background:var(--accent);border-color:var(--accent)}
+.chk{display:inline-flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);flex:none}
+.total{margin-top:18px;padding:14px;background:var(--board);color:var(--ink);border-radius:6px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tprice{display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:4px 14px;margin-left:auto}
+.orig{display:inline-block;font-size:16px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;text-decoration:line-through;text-decoration-thickness:2px}
+.total.sale{align-items:center}
+.total.sale strong{font-size:32px;color:var(--alert)}
+.total strong{font-family:var(--f-display);font-size:28px;font-variant-numeric:tabular-nums}
+.saved{color:var(--good);font-size:13.5px;margin-top:8px;font-weight:700}
+.copy{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.copy textarea{width:100%;min-height:150px}
+.fine{font-size:12.5px;color:var(--muted)}
+.foot{margin-top:30px;display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:13px}
+.foot ul{margin:0;padding-left:1.2em}
+
+.btn{padding:8px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:6px;font-weight:700;cursor:pointer;min-height:40px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:4px 12px;font-size:13px;min-height:34px}
+.btn.danger{color:var(--danger);border-color:var(--danger);background:transparent}
+
+.sumbar,.abar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line)}
+.sumbar strong{font-family:var(--f-display);font-size:22px;font-variant-numeric:tabular-nums}
+.sumbar small{color:var(--good);margin-left:8px;font-weight:700}
+.sumbar .barl{color:var(--muted);font-size:13px;margin-right:6px}
+.amsg{font-size:13px;color:var(--muted);min-width:0;flex:1}
+.abtns{display:flex;gap:8px;flex:none}
+
+@media (min-width:920px){
+  .layout{grid-template-columns:minmax(0,1fr) 380px;align-items:start}
+  .quote{position:sticky;top:calc(16px + env(safe-area-inset-top,0px));max-height:calc(100vh - 32px);overflow:auto}
+  .sumbar{display:none}
+  .wrap{padding-block:20px 60px}
+  .wrap.admin{padding-block:20px 120px}
+}
+
+/* 後台 */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-block:16px}
+.apanel{display:flex;flex-direction:column;gap:26px}
+.agroup{display:flex;flex-direction:column;gap:12px}
+.agroup > .head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.agroup h2{font-size:18px}
+.cards{display:grid;gap:12px}
+.acard{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.fields{display:grid;gap:10px 12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label,.field .lbl2{font-size:12.5px;color:var(--muted)}
+.field small{font-size:12px;color:var(--muted)}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;min-height:40px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--ink)}
+input[type=file]{max-width:100%}
+textarea{min-height:110px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:2px 16px}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.crow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--line);font-size:14px}
+.addrow{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+.addrow .field{flex:1 1 130px}
+.tierlist{display:flex;flex-direction:column;gap:8px}
+.tierrow{display:grid;gap:8px 10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));align-items:end;padding:10px;border:1px dashed var(--dashed);border-radius:6px}
+.bgprev{height:110px;border:1px solid var(--line);border-radius:6px;background-color:var(--bg);background-size:cover;background-position:center;display:grid;place-items:center;color:var(--muted);font-size:13px}
+details.more summary{cursor:pointer;color:var(--muted);font-size:13px;min-height:32px}
+details.more .tools{margin-top:6px}
+
+
+/* 視覺風格：弈生圍棋海報配色（黃／藍／珊瑚紅／黑白棋子），版面結構不變 */
+h1,h2,h3{font-weight:800}
+.top{position:relative;overflow:hidden;border:2px solid #111214;border-radius:14px;background-color:var(--yellow);
+  background-image:linear-gradient(rgba(255,255,255,.45) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.45) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;padding:22px 130px 22px 20px}
+.top.hasbg{background-size:cover;padding-right:20px}
+.top h1,.top .lead{color:#111214}
+.top h1{font-weight:900;letter-spacing:.02em;text-shadow:2px 2px 0 rgba(255,255,255,.55)}
+.top .eyebrow{display:inline-block;width:fit-content;background:#111214;color:#fff;padding:2px 12px;border-radius:999px;letter-spacing:.12em;font-size:13px}
+.top .demo{background:#111214;color:#fff}
+.top::after{content:"";position:absolute;top:18px;right:20px;width:30px;height:30px;border-radius:50%;background:#111214;pointer-events:none;
+  box-shadow:-40px 0 0 #111214,-80px 0 0 #fff,-60px 38px 0 #fff}
+.top.hasbg::after{display:none}
+@media (max-width:560px){
+  .top{padding-right:84px}
+  .top::after{top:14px;right:14px;width:20px;height:20px;box-shadow:-26px 0 0 #111214,-52px 0 0 #fff,-39px 26px 0 #fff}
+}
+.sec h2{display:inline-block;width:fit-content;background:var(--pill-bg);color:var(--pill-ink);padding:3px 16px;border-radius:999px;font-size:17px;margin-bottom:4px}
+.mcol h3{border-left:5px solid var(--yellow);padding-left:8px}
+.tab{border-width:1.5px;border-radius:10px}
+.tab[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tab[aria-selected="true"] small{color:#fff}
+.planbtn{border-width:1.5px;border-radius:10px}
+.planbtn.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.quote{border:2px solid var(--blue);border-radius:16px}
+.quote h2{font-weight:900}
+.tierbox{border:1.5px solid var(--blue);border-radius:10px}
+.item{border-radius:10px}
+.day{border-radius:8px}
+.stone.x{background:var(--yellow);color:#111214;box-shadow:inset 0 0 0 1.5px #111214}
+.total{border:2px solid var(--ink);border-radius:12px}
+.total strong{font-weight:900}
+.tag{color:var(--coral);border-color:var(--coral);font-weight:700}
+.sumbar{border-top:2px solid var(--blue)}
+@media (max-width:560px){.dsplit .slot{padding:2px 0;min-height:34px}.dsplit .slot .stone{width:21px;height:21px;font-size:9px;letter-spacing:-.02em}}
+.days{--lw:38px}
+.lab{display:flex;flex-direction:column;align-items:stretch;padding:4px 0}
+.lab .ltop{font-size:11px;visibility:hidden;padding-inline:4px}
+.lslot{display:grid;place-items:center;min-height:40px;font-size:12px;font-weight:800;color:var(--ink);line-height:1.2;text-align:center}
+.lslot.two{gap:0;align-content:center}
+.lslot.two span+span{margin-top:2px;padding-top:2px;border-top:1px dotted var(--dots)}
+@media (max-width:560px){.days{--lw:26px}.lslot{font-size:10px}.lslot.two{min-height:34px}}
+.btn{border-radius:999px}
+.btn.sm{border-radius:999px}
+
+
+/* 背景：淡藍底＋白色格線，上方黃色斜角、右下珊瑚紅斜角，大螢幕兩側有黑白棋子 */
+:root{--bg:#DCE8F3;--gridb:rgba(255,255,255,.55);--wedge:#F7B731;--wedgegrid:rgba(255,255,255,.4);--wedge2:#EE6C5B;--sidestone:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--gridb:rgba(255,255,255,.04);--wedge:#3A3012;--wedgegrid:rgba(255,255,255,.05);--wedge2:#4A2420;--sidestone:#2B4257}}
+:root[data-theme="dark"]{--gridb:rgba(255,255,255,.04);--wedge:#3A3012;--wedgegrid:rgba(255,255,255,.05);--wedge2:#4A2420;--sidestone:#2B4257}
+body{position:relative;min-height:100vh;background-color:var(--bg);
+  background-image:linear-gradient(var(--gridb) 1px,transparent 1px),linear-gradient(90deg,var(--gridb) 1px,transparent 1px);
+  background-size:32px 32px}
+body::before{content:"";position:absolute;top:0;left:0;right:0;height:300px;z-index:-1;pointer-events:none;
+  clip-path:polygon(0 0,100% 0,100% 62%,0 100%);
+  background:linear-gradient(var(--wedgegrid) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,var(--wedgegrid) 1px,transparent 1px) 0 0/32px 32px,var(--wedge)}
+body::after{content:"";position:absolute;right:0;bottom:0;width:100%;height:90px;z-index:-1;pointer-events:none;
+  clip-path:polygon(0 100%,100% 100%,100% 0);background:var(--wedge2)}
+html::before{content:"";display:none;position:fixed;left:28px;top:52vh;width:34px;height:34px;border-radius:50%;background:#111214;z-index:-1;pointer-events:none;
+  box-shadow:12px 52px 0 var(--sidestone),calc(100vw - 118px) -30px 0 var(--sidestone),calc(100vw - 92px) 26px 0 #111214}
+@media (min-width:1360px){html::before{display:block}}
+
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.hl{animation:none}}
+</style><div id="app"></div><script id="cfg" type="application/json">{"school":{"lead":"先填會員名稱，再到日曆直接點選要上的課。費用與可用的優惠會即時更新。","bgImage":"","xTime":"13:30–17:00","name":"弈生圍棋教室","title":"寒暑假課程試算","amTime":"09:00–11:30","pmTime":"14:00–16:30","contact":"報名洽詢：LINE faith7770309","notes":["試算結果僅供參考，實際金額以補習班確認為準。","優惠均以學費原價計算，材料費另計、不適用任何優惠。","同類型的優惠只取最划算的一個，標示「可疊加」的可與其他優惠合併。"],"demo":true,"amNote":"棋院早上 07:30 開門，可提早送達","planCustom":""},"seasons":[{"id":"w27","name":"寒假班","start":"2027-01-21","end":"2027-02-12","weekdays":[1,2,3,4,5],"closed":[{"date":"2027-01-23","label":"休息"},{"date":"2027-01-24","label":"休息"},{"date":"2027-01-30","label":"休息"},{"date":"2027-01-31","label":"休息"},{"date":"2027-02-08","label":"春節"},{"date":"2027-02-09","label":"春節"},{"date":"2027-02-10","label":"春節"},{"date":"2027-02-11","label":"休息"},{"date":"2027-02-12","label":"休息"}],"days":{"2027-01-21":{"am":["cgo"],"pm":["cgo"],"x":["cout"],"note":""},"2027-01-22":{"am":["cgo"],"pm":["cgo"],"x":["cart"],"note":""},"2027-01-23":{"am":[],"pm":[],"x":[],"note":""},"2027-01-24":{"am":[],"pm":[],"x":[],"note":""},"2027-01-25":{"am":["cgo"],"pm":["cgo"],"x":["cpoke"],"note":""},"2027-01-26":{"am":["cgo"],"pm":["cgo"],"x":["cbak"],"note":""},"2027-01-27":{"am":["cgo"],"pm":["cgo"],"x":["cmag"],"note":""},"2027-01-28":{"am":["cgo"],"pm":["cgo"],"x":["cdance"],"note":""},"2027-01-29":{"am":["cgo"],"pm":["cgo"],"x":["cgame"],"note":""},"2027-01-30":{"am":[],"pm":[],"x":[],"note":""},"2027-01-31":{"am":[],"pm":[],"x":[],"note":""},"2027-02-01":{"am":["cgo"],"pm":["cgo"],"x":["cbully"],"note":""},"2027-02-02":{"am":["cgo"],"pm":["cgo"],"x":["cmag"],"note":""},"2027-02-03":{"am":["cgo"],"pm":["cgo"],"x":["cart"],"note":""},"2027-02-04":{"am":["cgo"],"pm":["cgo"],"x":["cout"],"note":""},"2027-02-05":{"am":["cparty"],"pm":[],"x":[],"note":"當天只上 0900–1200"}}},{"id":"s27","name":"暑假班","start":"2027-02-05","end":"2027-02-27","weekdays":[1,2,3,4,5],"closed":[],"days":{}}],"courses":[{"id":"cgo","name":"圍棋課","short":"圍棋","slot":"ampm","price":500,"enabled":true,"materialName":"","materialAmount":0,"materialMode":"once","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cparty","name":"藝術+下棋+同樂會","short":"同樂","slot":"am","price":500,"enabled":true,"special":true,"materialName":"藝術材料","materialAmount":100,"materialMode":"each","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cart","name":"藝術才藝","short":"藝術","slot":"x","price":500,"enabled":true,"materialName":"藝術材料","materialAmount":100,"materialMode":"each","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cmag","name":"魔術才藝","short":"魔術","slot":"x","price":500,"enabled":true,"materialName":"魔術材料","materialAmount":100,"materialMode":"each","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cbak","name":"烘焙才藝","short":"烘焙","slot":"x","price":500,"enabled":true,"materialName":"烘焙材料","materialAmount":200,"materialMode":"each","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cout","name":"戶外運動","short":"戶外","slot":"x","price":500,"enabled":true,"materialName":"","materialAmount":0,"materialMode":"once","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cdance","name":"舞蹈","short":"舞蹈","slot":"x","price":500,"enabled":true,"materialName":"","materialAmount":0,"materialMode":"once","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cgame","name":"桌遊","short":"桌遊","slot":"x","price":500,"enabled":true,"materialName":"","materialAmount":0,"materialMode":"once","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cpoke","name":"寶可夢卡牌","short":"卡牌","slot":"x","price":500,"enabled":true,"special":true,"materialName":"卡牌材料","materialAmount":100,"materialMode":"each","materialEvery":1,"slotCustom":false,"timeText":""},{"id":"cbully","name":"反霸凌防身課","short":"防身","slot":"x","price":500,"enabled":true,"special":true,"materialName":"","materialAmount":0,"materialMode":"once","materialEvery":1,"slotCustom":false,"timeText":""}],"discounts":[{"id":"dt1","name":"天數套餐優惠","type":"tier","shareText":"分享 2 則貼文","scope":"all","until":"","stack":false,"enabled":true,"seasons":[],"note":"","tiers":[{"label":"單堂","minDays":0,"zhe":0,"share":0},{"label":"6–10 天全天","minDays":6,"zhe":9.5,"share":0},{"label":"11 天全報・豪華套餐","minDays":11,"zhe":9,"share":0}],"value":0,"plan":"kyu"},{"id":"dshare","name":"分享 2 則貼文","type":"share","kind":"zhe","value":0,"stack":true,"enabled":true,"seasons":[],"note":"","until":"","tiers":[{"label":"單堂","minDays":0,"zhe":0,"share":300},{"label":"6 天以上","minDays":6,"zhe":0,"share":500}],"plan":"kyu","shareText":"分享貼文","scope":"all"},{"id":"dsib","name":"兄弟姊妹優惠","type":"flag","kind":"zhe","value":9.5,"stack":true,"enabled":true,"seasons":[],"note":"","plan":"kyu"},{"id":"d1","name":"寒假早鳥優惠","type":"earlybird","until":"2026-12-31","kind":"zhe","value":9,"stack":false,"enabled":true,"seasons":["w27"],"note":"","plan":"kyu"},{"id":"d2","name":"暑假早鳥優惠","type":"earlybird","until":"2027-06-15","kind":"zhe","value":9,"stack":false,"enabled":true,"seasons":["s27"],"note":"","plan":"kyu"},{"id":"ddan","name":"段位優惠","type":"always","kind":"zhe","value":7,"stack":false,"enabled":true,"seasons":[],"note":"材料費不打折","plan":"dan"}]}</script><script id="main">
+(function(){
+"use strict";
+var app=document.getElementById("app");
+var cfg=JSON.parse(document.getElementById("cfg").textContent);
+var PLANS={kyu:"級位優惠",dan:"段位優惠"};
+function planName(k){return k==="cust"?(cfg.school.planCustom||"自訂身分"):(PLANS[k]||"");}
+var WD=["日","一","二","三","四","五","六"];
+var ORDER=[1,2,3,4,5,6,0];
+var SLOT={am:"上午",pm:"下午",x:"才藝+下棋"};
+var SLOTCH={am:"上",pm:"下",x:"才"};
+var STONE={am:"b",pm:"w",x:"x"};
+var SLOTS=["am","pm","ampm","x"];
+var state={mode:"view",season:null,active:{am:null,pm:null,x:null},sel:{},flags:{},plan:"kyu",member:"",isEditor:false,copyText:"",copyMsg:""};
+var lastN=0;
+var draft=null,adminTab="courses",adminMsg="",adminBusy=false,confirmKey=null;
+var PW_KEY="yisheng_admin_pw";
+function getPw(){try{return sessionStorage.getItem(PW_KEY)||"";}catch(e){return "";}}
+function setPw(v){try{if(v) sessionStorage.setItem(PW_KEY,v); else sessionStorage.removeItem(PW_KEY);}catch(e){}}
+function api(path,body){
+  return fetch(path,{method:body?"POST":"GET",headers:body?{"Content-Type":"application/json"}:{},body:body?JSON.stringify(body):undefined,cache:"no-store"})
+    .then(function(r){return r.json().catch(function(){return {};}).then(function(j){j._status=r.status;return j;});});
+}
+
+/* ---------- 小工具 ---------- */
+function add(el,c){
+  if(c===null||c===undefined||c===false) return;
+  if(Array.isArray(c)){c.forEach(function(x){add(el,x);});return;}
+  if(c.nodeType){el.appendChild(c);return;}
+  el.appendChild(document.createTextNode(String(c)));
+}
+function h(tag,attrs){
+  var el=document.createElement(tag),later=[];
+  if(attrs){Object.keys(attrs).forEach(function(k){
+    var v=attrs[k];
+    if(v===null||v===undefined||v===false) return;
+    if(k==="class") el.className=v;
+    else if(k.indexOf("on")===0) el.addEventListener(k.slice(2),v);
+    else if(k==="value"||k==="checked"||k==="disabled"||k==="selected") later.push([k,v]);
+    else el.setAttribute(k,v===true?"":String(v));
+  });}
+  for(var i=2;i<arguments.length;i++) add(el,arguments[i]);
+  later.forEach(function(p){el[p[0]]=p[1];});
+  return el;
+}
+function pad(n){return (n<10?"0":"")+n;}
+function parseD(s){
+  if(!s||!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+  var p=s.split("-").map(Number);
+  return new Date(p[0],p[1]-1,p[2]);
+}
+function fmtD(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function addDays(d,n){var x=new Date(d.getTime());x.setDate(x.getDate()+n);return x;}
+function md(s){var d=parseD(s);return d?(d.getMonth()+1)+"/"+d.getDate():"";}
+function mdw(s){var d=parseD(s);return d?(d.getMonth()+1)+"/"+d.getDate()+"（"+WD[d.getDay()]+"）":"";}
+function fmtNum(n){return Math.round(n).toLocaleString("en-US");}
+function fmtZhe(v){var x=Math.round(v*10);return (x%10===0?x/10:x)+"折";}
+function gid(p){return p+Math.random().toString(36).slice(2,7);}
+function today(){return fmtD(new Date());}
+function hasName(){return String(state.member||"").trim().length>0;}
+function courseInSlot(c,slot){return c.slot===slot||(c.slot==="ampm"&&(slot==="am"||slot==="pm"));}
+function hasX(){return cfg.courses.some(function(c){return c.enabled&&c.slot==="x";});}
+function isImg(s){return typeof s==="string"&&s.indexOf("data:image/")===0&&s.length<3000000&&!/["'()\\\s]/.test(s);}
+function curSeason(){
+  for(var i=0;i<cfg.seasons.length;i++) if(cfg.seasons[i].id===state.season) return cfg.seasons[i];
+  return cfg.seasons[0]||null;
+}
+function courseById(id){for(var i=0;i<cfg.courses.length;i++) if(cfg.courses[i].id===id) return cfg.courses[i];return null;}
+function weekdayText(s){return ORDER.filter(function(d){return s.weekdays.indexOf(d)>=0;}).map(function(d){return WD[d];}).join("、");}
+
+/* ---------- 日期與日曆資料 ---------- */
+var SLOTS3=["am","pm","x"];
+/* 某一天實際開的課：有後台排課就用排課；沒有就看上課星期，平日開全部課。
+   回傳 {o:{am:[課程id],pm:[…],x:[…]}, note, entry} */
+function effDay(season,iso,courses){
+  var e=(season.days||{})[iso],o={am:[],pm:[],x:[]};
+  if(e){
+    SLOTS3.forEach(function(sl){
+      o[sl]=(e[sl]||[]).filter(function(id){return courses.some(function(c){return c.id===id&&c.enabled&&courseInSlot(c,sl);});});
+    });
+    return {o:o,note:e.note||"",entry:true,xFirst:!!e.xFirst};
+  }
+  var p=parseD(iso);
+  if(p&&season.weekdays.indexOf(p.getDay())>=0){
+    SLOTS3.forEach(function(sl){o[sl]=courses.filter(function(c){return c.enabled&&!c.special&&courseInSlot(c,sl);}).map(function(c){return c.id;});});
+  }
+  return {o:o,note:"",entry:false,xFirst:false};
+}
+function seasonWeeks(season){
+  var start=parseD(season.start),end=parseD(season.end);
+  if(!start||!end||start>end) return [];
+  var closed={};
+  (season.closed||[]).forEach(function(c){
+    var m=closed[c.date]||(closed[c.date]={});
+    m[(c.part==="am"||c.part==="pm"||c.part==="x")?c.part:"all"]=c.label||"休";
+  });
+  var days_=season.days||{};
+  var cur=addDays(start,-((start.getDay()+6)%7));
+  var cols=ORDER.filter(function(wd){
+    if(season.weekdays.indexOf(wd)>=0) return true;
+    return Object.keys(days_).some(function(iso){var p=parseD(iso);return p&&p.getDay()===wd;});
+  });
+  var weeks=[],guard=0;
+  while(cur<=end&&guard++<90){
+    var days=cols.map(function(wd){
+      var dt=addDays(cur,(wd+6)%7),iso=fmtD(dt),m=closed[iso]||{};
+      var inR=dt>=start&&dt<=end;
+      var eff=effDay(season,iso,cfg.courses);
+      return {iso:iso,wd:wd,inRange:inR,note:eff.note,xFirst:eff.xFirst,offers:eff.o,
+        cl:{am:m.all||m.am||"",pm:m.all||m.pm||"",x:m.all||m.x||""}};
+    });
+    if(days.some(function(d){return d.inRange;})) weeks.push({days:days});
+    cur=addDays(cur,7);
+  }
+  return weeks;
+}
+function slotOpenD(d,slot){return d.inRange&&!d.cl[slot]&&d.offers[slot].length>0;}
+function isOpen(d){return slotOpenD(d,"am")||slotOpenD(d,"pm")||slotOpenD(d,"x");}
+/* 日曆資料快取：每次畫面重繪時重算一次 */
+var DMC={};
+function dayMapOf(season){
+  var m={};
+  seasonWeeks(season).forEach(function(w){w.days.forEach(function(d){m[d.iso]=d;});});
+  return m;
+}
+function dmCache(season){if(!DMC[season.id]) DMC[season.id]=dayMapOf(season);return DMC[season.id];}
+function okHere(dm,iso,slot,cid){var d=dm[iso];return !!(d&&slotOpenD(d,slot)&&d.offers[slot].indexOf(cid)>=0);}
+function openDays(season){
+  var out=[];
+  seasonWeeks(season).forEach(function(w){w.days.forEach(function(d){if(isOpen(d)) out.push(d.iso);});});
+  return out;
+}
+function slotDays(season,slot){
+  var out=[];
+  seasonWeeks(season).forEach(function(w){w.days.forEach(function(d){if(slotOpenD(d,slot)) out.push(d.iso);});});
+  return out;
+}
+
+/* ---------- 選課狀態 ---------- */
+function key(iso,slot){return iso+"|"+slot;}
+function getSel(sid){if(!state.sel[sid]) state.sel[sid]={};return state.sel[sid];}
+function touch(){state.copyText="";state.copyMsg="";}
+function other(slot){return slot==="pm"?"x":slot==="x"?"pm":null;}
+function hasSel(season,iso,slot){
+  var cid=getSel(season.id)[key(iso,slot)],c=courseById(cid);
+  return !!(c&&c.enabled&&courseInSlot(c,slot)&&okHere(dmCache(season),iso,slot,c.id));
+}
+function toggleSlot(season,iso,slot){
+  var s=getSel(season.id),k=key(iso,slot),d=dmCache(season)[iso];
+  if(!hasName()||!d||!slotOpenD(d,slot)) return;
+  var offers=d.offers[slot],cur=hasSel(season,iso,slot)?s[k]:null;
+  var i=cur?offers.indexOf(cur):-1;
+  var next=offers[i+1];
+  touch();
+  if(next===undefined){delete s[k];return;}
+  var o=other(slot);
+  if(o) delete s[key(iso,o)];
+  s[k]=next;
+}
+function firstOffer(dm,iso,slot){var d=dm[iso];return d&&slotOpenD(d,slot)?d.offers[slot][0]:null;}
+function applyEntries(season,ents){
+  if(!hasName()||!ents.length) return;
+  var s=getSel(season.id);
+  var allOn=ents.every(function(e){return s[e[0]]===e[1];});
+  if(!allOn) ents.forEach(function(e){var p=e[0].split("|"),o=other(p[1]);if(o) delete s[key(p[0],o)];});
+  ents.forEach(function(e){if(allOn) delete s[e[0]]; else s[e[0]]=e[1];});
+  touch();
+}
+function fillSlot(season,slot){
+  var o=other(slot),dm=dmCache(season);
+  applyEntries(season,slotDays(season,slot).map(function(iso){return [key(iso,slot),firstOffer(dm,iso,slot)];}));
+}
+function fillFull(season){
+  var ents=[],dm=dmCache(season);
+  ["am","pm"].forEach(function(sl){
+    slotDays(season,sl).forEach(function(iso){
+      ents.push([key(iso,sl),firstOffer(dm,iso,sl)]);
+    });
+  });
+  applyEntries(season,ents);
+}
+function fillWeek(season,w){
+  var ents=[],dm=dmCache(season);
+  w.days.forEach(function(d){["am","pm"].forEach(function(sl){
+    var fo=firstOffer(dm,d.iso,sl);
+    if(fo) ents.push([key(d.iso,sl),fo]);
+  });});
+  applyEntries(season,ents);
+}
+
+/* ---------- 計價 ---------- */
+function benefit(r){
+  if(r.kind==="amount") return (r.type==="fullday"?"每日折 $":"折 $")+fmtNum(r.value);
+  return fmtZhe(r.value);
+}
+function ruleDesc(r){
+  if(r.type==="sessions") return "滿 "+r.min+" 堂 · "+benefit(r);
+  if(r.type==="fullday") return "同日上午＋下午（或才藝）"+((r.min||1)>1?"滿 "+r.min+" 天":"")+" · "+benefit(r);
+  if(r.type==="earlybird") return mdw(r.until)+" 前報名 · "+benefit(r);
+  if(r.type==="custom") return (r.min>0?"滿 "+r.min+" 堂 · ":"")+benefit(r);
+  if(r.type==="always") return "全部學費 · "+benefit(r);
+  return benefit(r);
+}
+function tierBenefit(t){return (t.zhe>0?fmtZhe(t.zhe):"不打折")+(t.share>0?"、分享加碼 －$"+fmtNum(t.share):"");}
+function rangeText(tiers,i){
+  var t=tiers[i],nx=tiers[i+1];
+  if(t.minDays<=0) return nx?"全天未滿 "+nx.minDays+" 天":"全天不限";
+  if(!nx) return "全天 "+t.minDays+" 天以上";
+  return nx.minDays-1>t.minDays?"全天 "+t.minDays+"–"+(nx.minDays-1)+" 天":"全天 "+t.minDays+" 天";
+}
+function evalTier(r,ctx,res){
+  var tiers=(r.tiers||[]).slice().sort(function(a,b){return a.minDays-b.minDays;});
+  var days=ctx.fullDays.length,reached=null,next=null,i;
+  res.tiers=tiers;res.tier=null;
+  if(r.until&&ctx.today>r.until){res.expired=true;res.hint="已於 "+mdw(r.until)+" 截止";return res;}
+  if(!tiers.length){res.hint="尚未設定各段優惠";return res;}
+  if(ctx.nCore<1){res.hint="先選圍棋課（上午或下午），系統會自動判斷落在哪一段。";return res;}
+  tiers.forEach(function(t){if(days>=t.minDays) reached=t;});
+  for(i=0;i<tiers.length;i++){if(tiers[i].minDays>days){next=tiers[i];break;}}
+  if(!reached){res.hint="全天滿 "+tiers[0].minDays+" 天即可享";return res;}
+  res.tier=reached;
+  var base=r.scope==="core"?ctx.Tcore:ctx.T;
+  var pct=(reached.zhe>0&&reached.zhe<10)?Math.round(base*(1-reached.zhe/10)):0;
+  var sh=(state.flags[r.id]&&reached.share>0)?reached.share:0;
+  var parts=[];
+  if(pct>0) parts.push(fmtZhe(reached.zhe)+" －$"+fmtNum(pct));
+  if(sh>0) parts.push("分享加碼 －$"+fmtNum(sh));
+  res.eligible=true;res.pct=pct;res.share=sh;res.saving=pct+sh;
+  res.applyText="「"+reached.label+"」"+(parts.length?"："+parts.join("、"):"");
+  if(!parts.length) res.hint="目前在「"+reached.label+"」這一段，沒有折扣。";
+  if(reached.share>0&&!state.flags[r.id]) res.shareHint="勾選「"+(r.shareText||"分享貼文")+"」可再折 $"+fmtNum(reached.share);
+  if(next) res.nextHint="再選 "+(next.minDays-days)+" 天全天，升級為「"+next.label+"」："+tierBenefit(next);
+  return res;
+}
+function evalRule(r,ctx){
+  var res={rule:r,eligible:false,saving:0,hint:"",expired:false};
+  function calc(base){return r.kind==="amount"?Math.min(base,r.value):base*(1-r.value/10);}
+  if(r.type==="tier") return evalTier(r,ctx,res);
+  if(r.type==="share"){
+    var tr=(r.tiers||[]).slice().sort(function(a,b){return a.minDays-b.minDays;}),dd=ctx.fullDays.length,pk=null;
+    tr.forEach(function(t){if(dd>=t.minDays) pk=t;});
+    res.tiers=tr;res.tier=pk;
+    if(r.until&&ctx.today>r.until){res.expired=true;res.hint="已於 "+mdw(r.until)+" 截止";}
+    else if(ctx.nCore<1) res.hint="先選圍棋課，再勾選。";
+    else if(state.flags[r.id]&&pk&&pk.share>0){res.eligible=true;res.saving=Math.min(pk.share,ctx.T);}
+    else res.hint=state.flags[r.id]?"目前天數沒有加碼":"勾選即可享";
+    res.saving=Math.round(res.saving);
+    return res;
+  }
+  if(r.type==="always"){
+    if(ctx.n>=1){res.eligible=true;res.saving=calc(ctx.T);}
+    else res.hint="選課後自動折抵";
+    res.saving=Math.round(res.saving);
+    return res;
+  }
+  if(r.type==="sessions"){
+    if(ctx.n>=r.min){res.eligible=true;res.saving=calc(ctx.T);}
+    else res.hint=ctx.n===0?"選滿 "+r.min+" 堂即可享":"再選 "+(r.min-ctx.n)+" 堂即可享";
+  }else if(r.type==="fullday"){
+    var d=ctx.fullDays.length,m=r.min||1;
+    if(d>=m){
+      res.eligible=true;
+      var ft=ctx.fullDays.reduce(function(a,x){return a+x.t;},0);
+      res.saving=r.kind==="amount"?Math.min(ft,r.value*d):ft*(1-r.value/10);
+    }else res.hint=d===0?(m===1?"同一天選上午＋下午（或才藝）即可享":"選 "+m+" 天上午＋下午（或才藝）即可享"):"再選 "+(m-d)+" 天上午＋下午（或才藝）即可享";
+  }else if(r.type==="earlybird"){
+    if(r.until&&ctx.today<=r.until){res.eligible=true;res.saving=calc(ctx.T);}
+    else{res.expired=true;res.hint="已於 "+mdw(r.until)+" 截止";}
+  }else if(r.type==="flag"){
+    if(state.flags[r.id]){res.eligible=true;res.saving=calc(ctx.T);}
+    else res.hint="勾選即可享";
+  }else if(r.type==="custom"){
+    var mn=Math.max(0,r.min||0);
+    if(r.needCheck&&!state.flags[r.id]) res.hint="勾選即可享";
+    else if(ctx.n<Math.max(mn,1)) res.hint=mn>0?(ctx.n===0?"選滿 "+mn+" 堂即可享":"再選 "+(mn-ctx.n)+" 堂即可享"):"選課後自動折抵";
+    else{res.eligible=true;res.saving=calc(ctx.T);}
+  }
+  res.saving=Math.round(res.saving);
+  return res;
+}
+function quote(season){
+  var dm=dmCache(season);
+  var s=getSel(season.id);
+  var per={},day={},n=0,T=0,nCore=0,Tcore=0,cnt={am:0,pm:0,x:0};
+  Object.keys(s).forEach(function(k){
+    var p=k.split("|"),iso=p[0],slot=p[1],c=courseById(s[k]);
+    if(!c||!c.enabled||!courseInSlot(c,slot)||!okHere(dm,iso,slot,c.id)) return;
+    if(slot==="x"&&hasSel(season,iso,"pm")) return;
+    if(!per[c.id]) per[c.id]={course:c,count:0};
+    per[c.id].count++;n++;T+=c.price;cnt[slot]++;
+    if(slot!=="x"){nCore++;Tcore+=c.price;}
+    if(!day[iso]) day[iso]={};
+    day[iso][slot]=c;
+  });
+  var lines=[],mats=[],matTotal=0;
+  cfg.courses.forEach(function(c){
+    var p=per[c.id];
+    if(!p) return;
+    lines.push({course:c,count:p.count,amount:p.count*c.price});
+    if(c.materialAmount>0){
+      var every=Math.max(1,Math.floor(c.materialEvery||1));
+      var times=c.materialMode==="each"?p.count:c.materialMode==="custom"?Math.ceil(p.count/every):1;
+      var amt=c.materialAmount*times;
+      mats.push({label:(c.materialName||c.name+"材料")+((c.materialMode==="each"||c.materialMode==="custom")?" × "+times:""),amount:amt});
+      matTotal+=amt;
+    }
+  });
+  var fullDays=[],isoList=Object.keys(day).sort();
+  isoList.forEach(function(iso){var aft=day[iso].pm||day[iso].x;if(day[iso].am&&aft) fullDays.push({iso:iso,t:day[iso].am.price+aft.price});});
+  var ctx={n:n,T:T,nCore:nCore,Tcore:Tcore,fullDays:fullDays,today:today()};
+  var rules=(cfg.discounts||[]).filter(function(r){return r.enabled&&(!r.plan||r.plan==="all"||r.plan===state.plan)&&(!r.seasons||!r.seasons.length||r.seasons.indexOf(season.id)>=0);});
+  var results=rules.map(function(r){return evalRule(r,ctx);});
+  var stackable=results.filter(function(x){return x.eligible&&x.saving>0&&x.rule.stack;});
+  var solo=results.filter(function(x){return x.eligible&&x.saving>0&&!x.rule.stack;}).sort(function(a,b){return b.saving-a.saving;});
+  var applied=stackable.concat(solo.slice(0,1));
+  solo.slice(1).forEach(function(x){x.hint="已套用較划算的「"+solo[0].rule.name+"」";x.loser=true;});
+  results.forEach(function(x){if(x.eligible&&x.saving===0&&x.rule.type!=="tier") x.hint="符合資格，選課後自動折抵";});
+  var disc=Math.min(T,applied.reduce(function(a,x){return a+x.saving;},0));
+  return {n:n,cnt:cnt,nCore:nCore,T:T,lines:lines,mats:mats,matTotal:matTotal,results:results,applied:applied,disc:disc,total:T-disc+matTotal,saved:disc,day:day,isoList:isoList,fullDays:fullDays.length};
+}
+function summaryText(season,q){
+  var out=[cfg.school.name+"｜"+season.name+" 報名試算"];
+  out.push("會員名稱："+String(state.member).trim());
+  out.push("身分："+planName(state.plan));
+  out.push("");
+  q.isoList.forEach(function(iso){
+    var d=q.day[iso],parts=[];
+    if(d.am) parts.push("上午 "+d.am.name);
+    if(d.pm) parts.push("下午 "+d.pm.name);
+    if(d.x) parts.push("才藝 "+d.x.name);
+    out.push(mdw(iso)+" "+parts.join("、"));
+  });
+  out.push("");
+  q.lines.forEach(function(l){out.push(l.course.name+" × "+l.count+" 堂：NT$ "+fmtNum(l.amount));});
+  out.push("學費小計：NT$ "+fmtNum(q.T));
+  var shared=[];
+  q.applied.forEach(function(x){
+    if(x.rule.type==="tier"){
+      out.push("優惠・"+x.rule.name+"（"+x.tier.label+"）：－NT$ "+fmtNum(x.saving)+(x.share>0?"（含分享加碼 －NT$ "+fmtNum(x.share)+"）":""));
+      if(x.share>0) shared.push(x.rule.shareText||"分享貼文");
+    }else out.push("優惠・"+x.rule.name+"：－NT$ "+fmtNum(x.saving));
+  });
+  q.mats.forEach(function(m){out.push("材料費・"+m.label+"：NT$ "+fmtNum(m.amount));});
+  out.push("合計：NT$ "+fmtNum(q.total));
+  shared.forEach(function(t){out.push("已勾選："+t);});
+  return out.join("\n");
+}
+function doCopy(text){
+  function fallback(){state.copyText=text;state.copyMsg="無法自動複製，請在下方文字框全選後複製。";render();}
+  function ok(){state.copyText="";state.copyMsg="已複製，可以貼到 LINE 傳給補習班。";render();}
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok,fallback);return;}
+  }catch(e){}
+  fallback();
+}
+
+/* ---------- 家長端畫面 ---------- */
+function line(label,amount,cls){
+  return h("div",{class:"row "+(cls||"")},h("span",{class:"lbl"},label),h("span",{class:"dots","aria-hidden":"true"}),h("span",{class:"amt"},amount));
+}
+function header(){
+  var sc=cfg.school,bg=isImg(sc.bgImage);
+  var el=h("header",{class:"top"+(bg?" hasbg":"")},
+    h("p",{class:"eyebrow"},sc.name),
+    h("h1",null,sc.title),
+    h("p",{class:"lead"},sc.lead),
+    sc.demo?h("p",{class:"demo"},"目前是範例資料，課程名稱與金額僅供測試。"):null);
+  if(bg) el.style.backgroundImage='linear-gradient(var(--scrim),var(--scrim)),url("'+sc.bgImage+'")';
+  return el;
+}
+function seasonTabs(){
+  var cur=curSeason();
+  return h("div",{class:"seasons",role:"tablist","aria-label":"學期"},cfg.seasons.map(function(s){
+    return h("button",{type:"button",role:"tab",class:"tab","aria-selected":cur&&cur.id===s.id?"true":"false","data-fk":"t"+s.id,onclick:function(){state.season=s.id;state.copyText="";state.copyMsg="";render();}},
+      s.name,h("small",null,md(s.start)+" – "+md(s.end)));
+  }));
+}
+function syncGate(){
+  var ok=hasName(),els=app.querySelectorAll("[data-gate]"),i;
+  for(i=0;i<els.length;i++){
+    var el=els[i],g=el.getAttribute("data-gate");
+    if(g==="copy") el.disabled=!ok||!lastN;
+    else if(g==="fill") el.disabled=!ok;
+    else el.disabled=!ok;
+  }
+  var gn=document.getElementById("gatenote");if(gn) gn.hidden=ok;
+  var ch=document.getElementById("copyhint");if(ch) ch.hidden=ok;
+}
+function memberSection(){
+  var inp=h("input",{type:"text",id:"member-name",maxlength:"30",placeholder:"例：王小明",autocomplete:"off","data-fk":"member",value:state.member,
+    oninput:function(){state.member=inp.value;touch();syncGate();}});
+  return h("section",{class:"sec member"},
+    h("h2",null,"會員名稱"),
+    h("label",{class:"sub",for:"member-name"},"請先填寫，才能在下方日曆勾選上課日。報名內容會附上這個名稱。"),
+    inp);
+}
+function menuCol(slot){
+  var list=cfg.courses.filter(function(c){return c.enabled&&courseInSlot(c,slot);});
+  var col=h("div",{class:"mcol"+(slot==="x"?" xwide":"")},h("h3",null,SLOT[slot],h("small",null,cfg.school[slot+"Time"]||"")));
+  var grp=h("div",{role:"list","aria-label":SLOT[slot]+"課程",class:slot==="x"?"xgrid":null});
+  if(slot==="x") grp.style.setProperty("--rows",Math.max(1,Math.ceil(list.length/2)));
+  if(!list.length) grp.appendChild(h("p",{class:"empty"},"目前沒有開課"));
+  list.forEach(function(c){
+    var mat=c.materialAmount>0?" · "+(c.materialName||"材料費")+" $"+fmtNum(c.materialAmount)+(c.materialMode==="each"?"／堂":c.materialMode==="custom"?"／每 "+Math.max(1,Math.floor(c.materialEvery||1))+" 堂":"（整期一次）"):"";
+    grp.appendChild(h("div",{class:"item"},
+      h("span",{class:"stone "+STONE[slot]},c.short),
+      h("span",{class:"itbody"},
+        h("span",{class:"row"},h("span",{class:"lbl"},c.name),h("span",{class:"dots","aria-hidden":"true"}),h("span",{class:"amt"},c.price>0?"$"+fmtNum(c.price):"免費")),
+        h("span",{class:"per"},"每堂"+(c.slotCustom&&c.timeText?" · "+c.timeText:"")+mat))));
+  });
+  col.appendChild(grp);
+  return col;
+}
+function menuSection(){
+  var cols=[menuCol("am"),menuCol("pm")];
+  if(hasX()) cols.push(menuCol("x"));
+  return h("section",{class:"sec"},
+    h("h2",null,"課程菜單"),
+    h("p",{class:"sub"},"以下是課程與費用說明。請直接到下方日曆，點選每天要上的課。"+(hasX()?"才藝是另外加選，可選可不選。":"")),
+    cfg.school.amNote?h("p",{class:"hl",role:"note"},cfg.school.amNote):null,
+    h("div",{class:"menucols"},cols));
+}
+function slotBtn(season,d,slot){
+  if(d.cl[slot]) return h("div",{class:"shut",title:d.cl[slot]},"休");
+  var offers=d.offers[slot]||[];
+  if(!d.inRange||!offers.length) return h("div",{class:"shut",title:"這一格不開課"},"—");
+  var cid=getSel(season.id)[key(d.iso,slot)],c=cid?courseById(cid):null;
+  var on=hasSel(season,d.iso,slot);
+  var conflict=!on&&!!other(slot)&&hasSel(season,d.iso,other(slot));
+  var dt=parseD(d.iso);
+  var offerTxt=offers.map(function(id){var x=courseById(id);return x?x.short:"";}).join("／");
+  var label=(dt.getMonth()+1)+"月"+dt.getDate()+"日 週"+WD[d.wd]+" "+SLOT[slot]+(on?" "+c.name:(offerTxt?"（可選："+offerTxt+"）":""));
+  var inner=on?h("span",{class:"stone "+STONE[slot]},c.short):h("span",{class:"stone e"},offers.length===1?courseById(offers[0]).short:SLOTCH[slot]);
+  return h("button",{type:"button",class:"slot","aria-pressed":on?"true":"false","aria-label":label,disabled:!hasName(),title:conflict?"點一下改選這個（會取消另一個）":null,"data-gate":slot,"data-fk":"s"+d.iso+slot,
+    onclick:function(){toggleSlot(season,d.iso,slot);render();}},inner);
+}
+function dayCell(season,d){
+  if(!d.inRange) return h("div",{class:"day void","aria-hidden":"true"});
+  var dt=parseD(d.iso);
+  var top=h("div",{class:"dtop"},h("span",{class:"dd"},(dt.getMonth()+1)+"/"+dt.getDate()),h("span",null,WD[d.wd]));
+  if(!isOpen(d)){
+    var lbl=d.cl.am||d.cl.pm||d.cl.x||d.note||"休";
+    return h("div",{class:"day closed"},top,h("div",{class:"cl"},lbl));
+  }
+  var cell=h("div",{class:"day"},top);
+  cell.appendChild(slotBtn(season,d,"am"));
+  if(hasX()) cell.appendChild(h("div",{class:"dsplit"},d.xFirst?[slotBtn(season,d,"x"),slotBtn(season,d,"pm")]:[slotBtn(season,d,"pm"),slotBtn(season,d,"x")]));
+  else cell.appendChild(slotBtn(season,d,"pm"));
+  if(d.note) cell.appendChild(h("div",{class:"dnote"},d.note));
+  return cell;
+}
+function gbtn(label,fk,fn){
+  return h("button",{type:"button",class:"btn ghost sm","data-gate":"fill","data-fk":fk,disabled:!hasName(),onclick:function(){fn();render();}},label);
+}
+function calSection(season){
+  var weeks=seasonWeeks(season),total=openDays(season).length;
+  var sec=h("section",{class:"sec"},
+    h("h2",null,"上課日期"),
+    h("p",{class:"sub"},season.name+" "+md(season.start)+" – "+md(season.end)+"，每週"+weekdayText(season)+"，共 "+total+" 個上課日。上午為黑子、下午為白子"+(hasX()?"、才藝為黃子":"")+"，點一下選取，再點一下取消。"+(hasX()?"同一天的下午和才藝只能選一個。":"")));
+  var tools=h("div",{class:"tools"},
+    gbtn("整期全天","ff",function(){fillFull(season);}),
+    gbtn("整期上午","fa",function(){fillSlot(season,"am");}),
+    gbtn("整期下午","fp",function(){fillSlot(season,"pm");}),
+    hasX()?gbtn("整期才藝","fx",function(){fillSlot(season,"x");}):null,
+    h("button",{type:"button",class:"btn ghost sm","data-fk":"fc",onclick:function(){state.sel[season.id]={};touch();render();}},"清除"));
+  sec.appendChild(tools);
+  sec.appendChild(h("p",{class:"note",id:"gatenote",hidden:hasName()},"請先在上方填寫會員名稱，才能勾選日期。"));
+  if(!weeks.length){sec.appendChild(h("p",{class:"empty"},"這個學期還沒有設定上課日期。"));return sec;}
+  var wrap=h("div",{class:"weeks"});
+  weeks.forEach(function(w){
+    var ins=w.days.filter(function(d){return d.inRange;});
+    var lab=h("div",{class:"lab","aria-hidden":"true"},
+      h("div",{class:"ltop"},"0/0"),
+      h("div",{class:"lslot"},"上午"),
+      hasX()?h("div",{class:"lslot two"},h("span",null,"下午"),h("span",null,"才藝")):h("div",{class:"lslot"},"下午"));
+    var days=h("div",{class:"days"},[lab].concat(w.days.map(function(d){return dayCell(season,d);})));
+    days.style.gridTemplateColumns="var(--lw) repeat("+w.days.length+",minmax(0,1fr))";
+    var hasOpen=w.days.some(isOpen);
+    wrap.appendChild(h("div",{class:"week",role:"group","aria-label":md(ins[0].iso)+" 到 "+md(ins[ins.length-1].iso)+" 這一週"},
+      h("div",{class:"weekhead"},h("span",null,md(ins[0].iso)+" – "+md(ins[ins.length-1].iso)),
+        hasOpen?h("button",{type:"button",class:"btn ghost sm","data-gate":"fill","data-fk":"w"+ins[0].iso,disabled:!hasName(),onclick:function(){fillWeek(season,w);render();}},"整週"):null),
+      days));
+  });
+  sec.appendChild(wrap);
+  return sec;
+}
+function discItem(x,applied){
+  if(x.rule.type==="tier") return tierItem(x,applied);
+  if(x.rule.type==="share") return shareItem(x,applied);
+  var r=x.rule,isApp=applied.indexOf(x)>=0;
+  var head;
+  if(r.type==="flag"||(r.type==="custom"&&r.needCheck)){
+    head=h("label",{class:"chk",for:"flag-"+r.id},
+      h("input",{type:"checkbox",id:"flag-"+r.id,checked:!!state.flags[r.id],"data-fk":"flag-"+r.id,onchange:function(e){state.flags[r.id]=e.target.checked;touch();render();}}),
+      r.name);
+  }else head=h("span",{class:"lbl"},r.name);
+  var top=h("div",{class:"row"},head);
+  if(isApp){top.appendChild(h("span",{class:"dots","aria-hidden":"true"}));top.appendChild(h("span",{class:"amt"},"－$"+fmtNum(x.saving)));}
+  var desc=ruleDesc(r)+(r.note?"（"+r.note+"）":"");
+  var d=h("div",{class:"d"},desc,r.stack?h("span",{class:"tag"},"可疊加"):null);
+  var hint=isApp?"已套用":x.hint;
+  return h("div",{class:"disc"+(isApp?" applied":"")},top,d,hint?h("div",{class:"h"},hint):null);
+}
+function shareItem(x,applied){
+  var r=x.rule,isApp=applied.indexOf(x)>=0,tiers=x.tiers||[];
+  var top=h("div",{class:"row"},
+    h("label",{class:"chk",for:"flag-"+r.id},
+      h("input",{type:"checkbox",id:"flag-"+r.id,checked:!!state.flags[r.id],"data-fk":"flag-"+r.id,onchange:function(e){state.flags[r.id]=e.target.checked;touch();render();}}),
+      r.name));
+  if(isApp){top.appendChild(h("span",{class:"dots","aria-hidden":"true"}));top.appendChild(h("span",{class:"amt"},"－$"+fmtNum(x.saving)));}
+  var ul=h("ul",{class:"tiers"},tiers.map(function(t,i){
+    return h("li",{class:isApp&&t===x.tier?"on":""},t.label+" · "+rangeText(tiers,i)+" · 折 $"+fmtNum(t.share));
+  }));
+  var d=(r.note||r.stack)?h("div",{class:"d"},r.note||"",r.stack?h("span",{class:"tag"},"可疊加"):null):null;
+  var hint=isApp?"已套用":x.hint;
+  return h("div",{class:"disc"+(isApp?" applied":"")},top,d,ul,hint?h("div",{class:"h"},hint):null);
+}
+function tierItem(x,applied){
+  var r=x.rule,isApp=applied.indexOf(x)>=0,tiers=x.tiers||[];
+  var top=null;
+  if(isApp){top=h("div",{class:"row"},h("span",{class:"lbl"},x.tier.label),h("span",{class:"dots","aria-hidden":"true"}),h("span",{class:"amt"},"－$"+fmtNum(x.saving)));}
+  var ul=h("ul",{class:"tiers"},tiers.map(function(t,i){
+    return h("li",{class:t===x.tier?"on":""},t.label+" · "+rangeText(tiers,i)+" · "+tierBenefit(t));
+  }));
+  var share=null;
+  if(tiers.some(function(t){return t.share>0;})){
+    share=h("label",{class:"chk",for:"flag-"+r.id},
+      h("input",{type:"checkbox",id:"flag-"+r.id,checked:!!state.flags[r.id],"data-fk":"flag-"+r.id,onchange:function(e){state.flags[r.id]=e.target.checked;touch();render();}}),
+      r.shareText||"分享貼文");
+  }
+  var hint=isApp?"已套用 "+x.applyText:x.hint;
+  var d=(r.note||r.stack)?h("div",{class:"d"},r.note||"",r.stack?h("span",{class:"tag"},"可疊加"):null):null;
+  return h("div",{class:"disc tierbox"+(isApp?" applied":"")},top,ul,d,share,
+    hint?h("div",{class:"h"},hint):null,
+    x.shareHint?h("div",{class:"d"},x.shareHint):null,
+    x.nextHint?h("div",{class:"d"},x.nextHint):null);
+}
+function quoteAside(season,q){
+  lastN=q.n;
+  var a=h("aside",{class:"quote",id:"quote","aria-label":"費用試算"});
+  var plans=["kyu","dan"].concat(cfg.school.planCustom?["cust"]:[]);
+  var pw=h("div",{class:"plan",role:"radiogroup","aria-label":"會員身分"},plans.map(function(k){
+    var on=state.plan===k;
+    return h("button",{type:"button",class:"planbtn"+(on?" on":""),role:"radio","aria-checked":on?"true":"false","data-fk":"plan-"+k,
+      onclick:function(){state.plan=k;touch();render();}},planName(k));
+  }));
+  pw.style.gridTemplateColumns="repeat("+plans.length+",1fr)";
+  a.appendChild(pw);
+  a.appendChild(h("h2",null,"費用試算"));
+  var cn="上午 "+q.cnt.am+"・下午 "+q.cnt.pm+(q.cnt.x>0?"・才藝 "+q.cnt.x:"");
+  a.appendChild(h("p",{class:"sub"},season.name+" · 已選 "+q.n+" 堂"+(q.n?"（"+cn+"，共 "+q.isoList.length+" 天）":"")));
+  if(!q.n){
+    a.appendChild(h("p",{class:"empty"},"填好會員名稱後，到日曆勾選上課日，費用會顯示在這裡。"));
+  }else{
+    a.appendChild(h("h3",null,"學費"));
+    var ls=h("div",{class:"lines"});
+    q.lines.forEach(function(l){ls.appendChild(line(l.course.name+" × "+l.count+" 堂","$"+fmtNum(l.amount)));});
+    ls.appendChild(h("div",{class:"subtotal"},line("學費小計","$"+fmtNum(q.T))));
+    a.appendChild(ls);
+  }
+  var tierRes=q.results.filter(function(x){return x.rule.type==="tier";});
+  var earlyRes=q.results.filter(function(x){return x.rule.type==="earlybird";});
+  var otherRes=q.results.filter(function(x){return x.rule.type!=="tier"&&x.rule.type!=="earlybird";});
+  if(earlyRes.length){
+    var eb=h("div",{class:"early"});
+    earlyRes.forEach(function(x){var ap=q.applied.indexOf(x)>=0;var row=h("div",{class:"row"},h("span",{class:"lbl"},x.rule.name));if(ap){row.appendChild(h("span",{class:"dots","aria-hidden":"true"}));row.appendChild(h("span",{class:"amt"},"－$"+fmtNum(x.saving)));}eb.appendChild(h("div",{class:"disc"+(ap?" applied":"")},row));});
+    a.appendChild(eb);
+  }
+  a.appendChild(h("h3",null,"優惠"));
+  if(!tierRes.length&&!otherRes.length&&!earlyRes.length) a.appendChild(h("p",{class:"empty"},"這個學期目前沒有優惠。"));
+  tierRes.forEach(function(x){a.appendChild(discItem(x,q.applied));});
+  var dl=h("div",{class:otherRes.length&&tierRes.length?"others":null});
+  otherRes.forEach(function(x){dl.appendChild(discItem(x,q.applied));});
+  a.appendChild(dl);
+  if(q.mats.length){
+    a.appendChild(h("h3",null,"材料費（不計入優惠）"));
+    var ms=h("div",{class:"lines"});
+    q.mats.forEach(function(m){ms.appendChild(line(m.label,"$"+fmtNum(m.amount)));});
+    a.appendChild(ms);
+  }
+  a.appendChild(h("div",{class:"total"+(q.saved>0?" sale":""),role:"status"},h("span",null,q.saved>0?"優惠後合計":"合計"),
+    h("div",{class:"tprice"},
+      q.saved>0?h("span",{class:"orig","aria-label":"原價 NT$ "+fmtNum(q.T+q.matTotal)},"原價 NT$ "+fmtNum(q.T+q.matTotal)):null,
+      h("strong",null,"NT$ "+fmtNum(q.total)))));
+  if(q.saved>0) a.appendChild(h("p",{class:"saved"},"優惠共省下 $"+fmtNum(q.saved)));
+  var cp=h("div",{class:"copy"});
+  cp.appendChild(h("button",{type:"button",class:"btn",disabled:!hasName()||!q.n,"data-gate":"copy","data-fk":"copy",onclick:function(){if(hasName()&&q.n) doCopy(summaryText(season,q));}},"複製報名內容"));
+  cp.appendChild(h("p",{class:"fine",id:"copyhint",hidden:hasName()},"填寫會員名稱後，才能複製報名內容。"));
+  if(state.copyMsg) cp.appendChild(h("p",{class:"fine",role:"status"},state.copyMsg));
+  if(state.copyText){
+    var ta=h("textarea",{id:"copytext",readonly:"readonly","aria-label":"報名內容"});
+    ta.value=state.copyText;
+    ta.addEventListener("focus",function(){ta.select();});
+    cp.appendChild(ta);
+  }
+  a.appendChild(cp);
+  return a;
+}
+function sumBar(q){
+  return h("div",{class:"sumbar"},
+    h("div",null,h("span",{class:"barl"},"合計"),h("strong",null,"NT$ "+fmtNum(q.total)),q.saved>0?h("small",null,"省 $"+fmtNum(q.saved)):null),
+    h("button",{type:"button",class:"btn",onclick:function(){
+      var el=document.getElementById("quote");
+      if(el) el.scrollIntoView({behavior:window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+    }},"看明細"));
+}
+function footer(){
+  var sc=cfg.school;
+  var f=h("footer",{class:"foot"});
+  var notes=(sc.notes||[]).filter(function(x){return x&&x.trim();});
+  if(notes.length) f.appendChild(h("ul",null,notes.map(function(x){return h("li",null,x);})));
+  if(sc.contact) f.appendChild(h("p",null,sc.contact));
+  if(getPw()||location.hash==="#admin") f.appendChild(h("div",null,h("button",{type:"button",class:"btn ghost sm","data-fk":"edit",onclick:enterAdmin},"編輯內容（後台）")));
+  return f;
+}
+function publicView(){
+  var wrap=h("div",{class:"wrap"});
+  wrap.appendChild(header());
+  var season=curSeason();
+  if(!season){
+    wrap.appendChild(h("p",{class:"empty"},"目前沒有開放報名的學期。"));
+    wrap.appendChild(footer());
+    return wrap;
+  }
+  wrap.appendChild(seasonTabs());
+  var q=quote(season);
+  wrap.appendChild(h("div",{class:"layout"},
+    h("div",{class:"main"},memberSection(),menuSection(),calSection(season)),
+    quoteAside(season,q)));
+  wrap.appendChild(footer());
+  wrap.appendChild(sumBar(q));
+  return wrap;
+}
+
+/* ---------- 後台 ---------- */
+var TYPES=[["always","自動套用（選課後直接打折）"],["tier","天數套餐優惠（依全天天數分段）"],["share","分享加碼（勾選，依天數折抵）"],["earlybird","早鳥優惠（有截止日）"],["sessions","滿堂數"],["fullday","全日班（上午＋下午）"],["flag","身分條件（家長自行勾選）"],["custom","自訂優惠（自己設定門檻與折扣）"]];
+var COURSE_SLOTS=[["am","上午"],["pm","下午"],["ampm","上午＋下午都可選"],["x","才藝+下棋（日曆多一格）"]];
+function ar(keep){if(!keep) confirmKey=null;render();}
+function fld(label,control,hint){
+  return h("div",{class:"field"},h("label",{for:control.id},label),control,hint?h("small",null,hint):null);
+}
+function fid(obj,k,o){return (o&&o.id)||("f-"+(obj.id||"x")+"-"+k);}
+function tin(obj,k,o){
+  o=o||{};
+  var t=o.type||"text";
+  var el=h("input",{type:t,id:fid(obj,k,o),value:obj[k]==null?"":obj[k],maxlength:o.max,min:o.min,step:o.step,placeholder:o.ph,
+    oninput:function(){obj[k]=t==="number"?(el.value===""?0:Number(el.value)):el.value;}});
+  return el;
+}
+function chk(obj,k,label,after){
+  var id=fid(obj,k);
+  var el=h("input",{type:"checkbox",id:id,checked:!!obj[k],onchange:function(){obj[k]=el.checked;if(after) after();}});
+  return h("label",{class:"chk",for:id},el,label);
+}
+function selc(obj,k,opts,after){
+  var el=h("select",{id:fid(obj,k),value:obj[k],onchange:function(){obj[k]=el.value;if(after) after();}},
+    opts.map(function(o){return h("option",{value:o[0]},o[1]);}));
+  return el;
+}
+function newCourse(slot){
+  var isX=slot==="x";
+  return {id:gid("c"),name:isX?"新才藝":"新課程",short:isX?"才藝":"新課",slot:slot,price:isX?400:500,enabled:true,materialName:"",materialAmount:0,materialMode:"once"};
+}
+function newRule(type){
+  var r={id:gid("d"),name:"新優惠",plan:"all",type:type,kind:"zhe",value:9,stack:false,enabled:true,seasons:[],note:""};
+  if(type==="sessions"){r.name="滿堂數優惠";r.min=10;}
+  else if(type==="tier"){
+    r.name="天數套餐優惠";r.plan="kyu";r.scope="all";r.until="";r.shareText="分享 2 則貼文";
+    r.tiers=[{label:"單堂",minDays:0,zhe:0,share:0},{label:"全天套餐",minDays:6,zhe:9.5,share:0},{label:"豪華套餐",minDays:11,zhe:9,share:0}];
+  }
+  else if(type==="share"){r.name="分享 2 則貼文";r.stack=true;r.until="";r.tiers=[{label:"單堂",minDays:0,zhe:0,share:300},{label:"6 天以上",minDays:6,zhe:0,share:500}];}
+  else if(type==="earlybird"){r.name="早鳥優惠";r.until=today();}
+  else if(type==="always"){r.name="段位優惠";r.kind="zhe";r.value=7;r.plan="dan";}
+  else if(type==="fullday"){r.name="全日班優惠";r.min=1;r.kind="amount";r.value=50;r.stack=true;}
+  else if(type==="flag"){r.name="身分優惠";r.stack=true;}
+  else if(type==="custom"){r.name="自訂優惠";r.min=0;r.needCheck=true;r.stack=true;}
+  return r;
+}
+function applyTypeDefaults(r){
+  if(r.type==="custom"){if(r.needCheck==null) r.needCheck=true;if(r.min==null) r.min=0;}
+  if(r.type==="sessions"&&!r.min) r.min=10;
+  if(r.type==="fullday"&&!r.min) r.min=1;
+  if(r.type==="earlybird"&&!r.until) r.until=today();
+  if(r.type==="share"){
+    if(!r.tiers||!r.tiers.length) r.tiers=newRule("share").tiers;
+    if(r.until==null) r.until="";
+  }
+  if(r.type==="tier"){
+    var t=newRule("tier");
+    if(!r.tiers||!r.tiers.length) r.tiers=t.tiers;
+    if(!r.scope) r.scope="all";
+    if(!r.shareText) r.shareText=t.shareText;
+    if(r.until==null) r.until="";
+  }
+}
+function slotSel(c){
+  var opts=COURSE_SLOTS.concat([["custom","自訂（自己填時間文字）"]]);
+  var el=h("select",{id:"f-"+c.id+"-slotmode",value:c.slotCustom?"custom":c.slot,onchange:function(){
+    if(el.value==="custom"){c.slotCustom=true;}else{c.slotCustom=false;c.slot=el.value;}
+    ar(true);
+  }},opts.map(function(o){return h("option",{value:o[0]},o[1]);}));
+  return el;
+}
+function courseCard(c){
+  var armed=confirmKey==="c:"+c.id;
+  return h("article",{class:"acard"},
+    h("div",{class:"fields"},
+      fld("課程名稱",tin(c,"name")),
+      fld("日曆簡稱（2 字）",tin(c,"short",{max:2})),
+      fld("時段",slotSel(c)),
+      c.slotCustom?fld("日曆歸入哪一格",selc(c,"slot",COURSE_SLOTS,function(){ar(true);}),"決定這門課出現在日曆的哪一排"):null,
+      c.slotCustom?fld("自訂時間文字",tin(c,"timeText",{max:30,ph:"例：10:00–12:00"}),"顯示在課程菜單上"):null,
+      fld("學費（每堂，NT$）",tin(c,"price",{type:"number",min:0,step:10}))),
+    h("div",{class:"fields"},
+      fld("材料費名稱",tin(c,"materialName",{ph:"例：畫具包"}),"沒有材料費就留空"),
+      fld("材料費（NT$）",tin(c,"materialAmount",{type:"number",min:0,step:10}),"材料費不計入任何優惠"),
+      fld("材料費怎麼收",selc(c,"materialMode",[["once","整期收一次"],["each","每堂收"],["custom","自訂（每 N 堂收一次）"]],function(){if(c.materialMode==="custom"&&!c.materialEvery) c.materialEvery=2;ar(true);})),
+      c.materialMode==="custom"?fld("每幾堂收一次",tin(c,"materialEvery",{type:"number",min:1,step:1}),"例：4 = 每 4 堂收一次，不足 4 堂也算一次"):null),
+    h("div",{class:"arow"},h("div",{class:"chips"},chk(c,"enabled","上架（家長看得到）"),chk(c,"special","自訂課程：只在「日期排課」勾選的日子才開")),
+      h("button",{type:"button",class:"btn ghost sm"+(armed?" danger":""),onclick:function(){
+        if(armed){draft.courses=draft.courses.filter(function(x){return x.id!==c.id;});confirmKey=null;ar();}
+        else{confirmKey="c:"+c.id;ar(true);}
+      }},armed?"再按一次確認刪除":"刪除")));
+}
+function adminCourses(){
+  var box=h("div",{class:"apanel"});
+  var adds=h("div",{class:"tools"},[["am","＋ 上午課程"],["pm","＋ 下午課程"],["ampm","＋ 上午＋下午課程"],["x","＋ 才藝+下棋課程"]].map(function(t){
+    return h("button",{type:"button",class:"btn ghost sm",onclick:function(){draft.courses.push(newCourse(t[0]));ar();}},t[1]);
+  }));
+  box.appendChild(h("section",{class:"agroup"},
+    h("div",{class:"head"},h("h2",null,"課程（"+draft.courses.length+"）")),
+    h("p",{class:"fine"},"圍棋這類上午、下午都有的課，時段選「上午＋下午」。才藝是另外加選的，時段選「才藝加選」，日曆每天會多一格。"),
+    adds));
+  COURSE_SLOTS.forEach(function(g){
+    var list=draft.courses.filter(function(c){return c.slot===g[0];});
+    if(!list.length) return;
+    box.appendChild(h("section",{class:"agroup"},
+      h("div",{class:"head"},h("h2",null,g[1]+"課程（"+list.length+"）")),
+      h("div",{class:"cards"},list.map(courseCard))));
+  });
+  return box;
+}
+function tierEditor(r){
+  var list=h("div",{class:"tierlist"});
+  r.tiers.forEach(function(t,i){
+    var p="f-"+r.id+"-t"+i+"-";
+    list.appendChild(h("div",{class:"tierrow"},
+      fld("段位名稱",tin(t,"label",{id:p+"label"})),
+      fld("全天幾天起",tin(t,"minDays",{type:"number",min:0,step:1,id:p+"min"}),"0 = 一開始就適用"),
+      r.type==="share"?null:fld("打幾折",tin(t,"zhe",{type:"number",min:0,step:0.5,id:p+"zhe"}),"0 = 不打折，9.5 = 95折"),
+      r.type==="share"?fld("折抵金額（NT$）",tin(t,"share",{type:"number",min:0,step:50,id:p+"share"}),"這一段勾選後折多少"):null,
+      h("button",{type:"button",class:"btn ghost sm",disabled:r.tiers.length<2,onclick:function(){r.tiers.splice(i,1);ar(true);}},"刪除這一段")));
+  });
+  return h("div",{class:"field"},
+    h("span",{class:"lbl2"},"各段設定（「全天」指同一天上午加下午，或上午加才藝）"),
+    list,
+    h("div",{class:"tools"},h("button",{type:"button",class:"btn ghost sm",onclick:function(){
+      var mx=r.tiers.reduce(function(a,t){return Math.max(a,Number(t.minDays)||0);},0);
+      r.tiers.push({label:"新的一段",minDays:mx+1,zhe:0,share:0});ar(true);
+    }},"＋ 新增一段")),
+    h("small",null,"天數起點由小到大，家長選的全天天數落在哪一段，就用那一段的折數。分享貼文的折抵請在「分享加碼」優惠另外設定。"));
+}
+function ruleCard(r){
+  var armed=confirmKey==="d:"+r.id;
+  var isTier=r.type==="tier";
+  var f1=[fld("優惠名稱",tin(r,"name")),fld("適用身分",selc(r,"plan",[["all","級位、段位都適用"],["kyu","只給級位優惠"],["dan","只給段位優惠"],["cust","自訂身分（自己取名稱）"]],function(){ar(true);})),fld("類型",selc(r,"type",TYPES,function(){applyTypeDefaults(r);ar(true);}))];
+  if(r.plan==="cust") f1.push(fld("自訂身分名稱",tin(draft.school,"planCustom",{id:"f-planCustom-"+r.id,max:12,ph:"例：新生"}),"家長端會多一個這個名稱的按鈕，所有「自訂身分」的優惠共用這個名稱"));
+  if(r.type==="custom"){
+    f1.push(fld("至少幾堂（0 = 不限）",tin(r,"min",{type:"number",min:0,step:1}),"上午、下午、才藝各算 1 堂"));
+    f1.push(h("div",{class:"field"},h("span",{class:"lbl2"},"家長要勾選才套用"),chk(r,"needCheck","需要家長勾選",function(){ar(true);})));
+  }
+  if(r.type==="sessions") f1.push(fld("滿幾堂",tin(r,"min",{type:"number",min:1,step:1}),"上午或下午各算 1 堂"));
+  if(r.type==="fullday") f1.push(fld("至少幾天（上午＋下午）",tin(r,"min",{type:"number",min:1,step:1})));
+  if(r.type==="earlybird") f1.push(fld("報名截止日",tin(r,"until",{type:"date"}),"當天仍可享有"));
+  var body=[h("div",{class:"fields"},f1)];
+  if(isTier){
+    body.push(h("div",{class:"fields"},
+      fld("折扣算在哪些學費",selc(r,"scope",[["all","全部學費（含才藝）"],["core","只算上午／下午的課"]])),
+      fld("優惠截止日（選填）",tin(r,"until",{type:"date"}),"超過這天就不再計算，留空 = 不限")));
+    body.push(tierEditor(r));
+    body.push(h("div",{class:"fields"},fld("備註（選填）",tin(r,"note"))));
+  }else if(r.type==="share"){
+    body.push(h("div",{class:"fields"},fld("優惠截止日（選填）",tin(r,"until",{type:"date"}),"留空 = 不限"),fld("備註（選填）",tin(r,"note"))));
+    body.push(tierEditor(r));
+  }else{
+    var f2=[fld("優惠方式",selc(r,"kind",[["zhe","打折"],["amount","折抵金額"]],function(){ar(true);}))];
+    f2.push(fld(r.kind==="zhe"?"折數":(r.type==="fullday"?"每天折抵（NT$）":"折抵金額（NT$）"),
+      tin(r,"value",{type:"number",min:0,step:r.kind==="zhe"?0.5:10}),r.kind==="zhe"?"9 = 9折，8.5 = 85折":""));
+    var isChk=r.type==="flag"||(r.type==="custom"&&r.needCheck);
+    f2.push(fld(isChk?"條件說明":"備註（選填）",tin(r,"note"),isChk?"顯示在勾選項目下方":""));
+    body.push(h("div",{class:"fields"},f2));
+  }
+  var chips=h("div",{class:"chips"},draft.seasons.map(function(s){
+    var id="f-"+r.id+"-s-"+s.id;
+    var el=h("input",{type:"checkbox",id:id,checked:r.seasons.indexOf(s.id)>=0,onchange:function(){
+      var i=r.seasons.indexOf(s.id);
+      if(el.checked&&i<0) r.seasons.push(s.id);
+      if(!el.checked&&i>=0) r.seasons.splice(i,1);
+    }});
+    return h("label",{class:"chk",for:id},el,s.name);
+  }));
+  return h("article",{class:"acard"},
+    body,
+    h("div",{class:"field"},h("span",{class:"lbl2"},"適用學期"),chips,h("small",null,"都不勾 = 所有學期")),
+    h("div",{class:"arow"},
+      h("div",{class:"chips"},chk(r,"stack","可疊加"),chk(r,"enabled","啟用")),
+      h("button",{type:"button",class:"btn ghost sm"+(armed?" danger":""),onclick:function(){
+        if(armed){draft.discounts=draft.discounts.filter(function(x){return x.id!==r.id;});confirmKey=null;ar();}
+        else{confirmKey="d:"+r.id;ar(true);}
+      }},armed?"再按一次確認刪除":"刪除")),
+    h("p",{class:"fine"},"可疊加：勾選 = 可以和其他優惠一起使用。不勾選 = 和其他「不可疊加」的優惠只取最划算的一個。"));
+}
+function addRuleBtn(t){
+  return h("button",{type:"button",class:"btn ghost sm",onclick:function(){draft.discounts.push(newRule(t[0]));ar();}},"＋ "+t[1]);
+}
+function adminDiscounts(){
+  var box=h("div",{class:"apanel"});
+  var adds=h("div",{class:"tools"},TYPES.slice(0,2).map(addRuleBtn));
+  var more=h("details",{class:"more"},h("summary",null,"其他優惠類型"),h("div",{class:"tools"},TYPES.slice(2).map(addRuleBtn)));
+  box.appendChild(h("section",{class:"agroup"},h("div",{class:"head"},h("h2",null,"優惠（"+draft.discounts.length+"）")),adds,more,
+    h("div",{class:"cards"},draft.discounts.length?draft.discounts.map(ruleCard):h("p",{class:"empty"},"還沒有優惠。"))));
+  return box;
+}
+var PART_TXT={am:"（只休上午）",pm:"（只休下午）",x:"（只休才藝）"};
+var SLOT_GROUPS=[["am","上午"],["pm","下午"],["x","才藝+下棋"]];
+function ensureDay(s,iso){
+  s.days=s.days||{};
+  if(!s.days[iso]){
+    var eff=effDay(s,iso,draft.courses);
+    s.days[iso]={am:eff.o.am.slice(),pm:eff.o.pm.slice(),x:eff.o.x.slice(),note:""};
+  }
+  return s.days[iso];
+}
+function dayRow(s,iso){
+  var eff=effDay(s,iso,draft.courses);
+  var head=h("div",{class:"dhead"},h("strong",null,mdw(iso)),
+    eff.entry?h("button",{type:"button",class:"btn ghost sm",onclick:function(){delete s.days[iso];ar(true);}},"恢復預設"):h("small",null,"（使用預設：平日全開）"));
+  var row=h("div",{class:"drow"},head);
+  SLOT_GROUPS.forEach(function(g){
+    var sl=g[0];
+    var list=draft.courses.filter(function(c){return c.enabled&&courseInSlot(c,sl);});
+    var grp=h("div",{class:"dgrp"},h("span",{class:"lbl2"},g[1]));
+    if(!list.length) grp.appendChild(h("small",null,"（沒有上架的課程）"));
+    list.forEach(function(c){
+      var id="f-"+s.id+"-"+iso+"-"+sl+"-"+c.id;
+      var el=h("input",{type:"checkbox",id:id,checked:eff.o[sl].indexOf(c.id)>=0,onchange:function(){
+        var e=ensureDay(s,iso),arr=e[sl]||(e[sl]=[]),i=arr.indexOf(c.id);
+        if(el.checked&&i<0) arr.push(c.id);
+        if(!el.checked&&i>=0) arr.splice(i,1);
+      }});
+      grp.appendChild(h("label",{class:"chk",for:id},el,c.short||c.name));
+    });
+    row.appendChild(grp);
+  });
+  if(draft.courses.some(function(c){return c.enabled&&c.slot==="x";})){
+    var xf=h("input",{type:"checkbox",id:"f-"+s.id+"-"+iso+"-xfirst",checked:!!eff.xFirst,onchange:function(){var e=ensureDay(s,iso);if(xf.checked) e.xFirst=true; else delete e.xFirst;}});
+    row.appendChild(h("div",{class:"dgrp"},h("span",{class:"lbl2"},"下排位置"),h("label",{class:"chk",for:xf.id},xf,"才藝放左邊、下午放右邊")));
+  }
+  var ni=h("input",{type:"text",id:"f-"+s.id+"-"+iso+"-note",maxlength:"60",placeholder:"例：當天只上 0900–1200",oninput:function(){ensureDay(s,iso).note=ni.value.trim();}});
+  ni.value=eff.note;
+  row.appendChild(h("div",{class:"field"},h("label",{for:ni.id},"當天備註（家長看得到，選填）"),ni));
+  return row;
+}
+function dayTable(s){
+  var start=parseD(s.start),end=parseD(s.end);
+  if(!start||!end||start>end) return h("p",{class:"empty"},"請先設定開始日與結束日。");
+  var box=h("div",{class:"dayadm"}),cur=addDays(start,-((start.getDay()+6)%7)),guard=0;
+  while(cur<=end&&guard++<90){
+    var dates=[];
+    for(var i=0;i<7;i++){var dt=addDays(cur,i);if(dt>=start&&dt<=end) dates.push(fmtD(dt));}
+    if(dates.length){
+      var det=h("details",{class:"more"},h("summary",null,mdw(dates[0])+" – "+md(dates[dates.length-1])+"　（點開排課）"));
+      dates.forEach(function(iso){det.appendChild(dayRow(s,iso));});
+      box.appendChild(det);
+    }
+    cur=addDays(cur,7);
+  }
+  return box;
+}
+function seasonCard(s){
+  var armed=confirmKey==="s:"+s.id;
+  var nd={from:"",to:"",label:"休息",part:"all"};
+  var wd=h("div",{class:"chips"},ORDER.map(function(d){
+    var id="f-"+s.id+"-wd"+d;
+    var el=h("input",{type:"checkbox",id:id,checked:s.weekdays.indexOf(d)>=0,onchange:function(){
+      var i=s.weekdays.indexOf(d);
+      if(el.checked&&i<0) s.weekdays.push(d);
+      if(!el.checked&&i>=0) s.weekdays.splice(i,1);
+    }});
+    return h("label",{class:"chk",for:id},el,"週"+WD[d]);
+  }));
+  var cl=h("div",null,s.closed.length?s.closed.map(function(c,i){
+    return h("div",{class:"crow"},h("span",null,mdw(c.date)+(c.label?"　"+c.label:"")+(PART_TXT[c.part]||"")),
+      h("button",{type:"button",class:"btn ghost sm",onclick:function(){s.closed.splice(i,1);ar(true);}},"移除"));
+  }):h("p",{class:"empty"},"沒有休息日。"));
+  var fromI=h("input",{type:"date",id:"f-"+s.id+"-from",oninput:function(){nd.from=fromI.value;}});
+  var toI=h("input",{type:"date",id:"f-"+s.id+"-to",oninput:function(){nd.to=toI.value;}});
+  var lbI=h("input",{type:"text",id:"f-"+s.id+"-lb",value:nd.label,oninput:function(){nd.label=lbI.value;}});
+  var partI=h("select",{id:"f-"+s.id+"-part",value:"all",onchange:function(){nd.part=partI.value;}},
+    h("option",{value:"all"},"整天休息"),h("option",{value:"am"},"只休上午（下午照常）"),h("option",{value:"pm"},"只休下午（上午照常）"),h("option",{value:"x"},"只休才藝（上午、下午照常）"));
+  var addBtn=h("button",{type:"button",class:"btn ghost sm",onclick:function(){
+    var a=parseD(nd.from);
+    if(!a){adminMsg="請先選休息日的日期。";render();return;}
+    var b=parseD(nd.to)||a;
+    if(b<a){adminMsg="休息日的迄日不能早於起日。";render();return;}
+    var cur=a,guard=0;
+    while(cur<=b&&guard++<60){
+      var iso=fmtD(cur);
+      if(!s.closed.some(function(c){return c.date===iso&&(c.part||"all")===nd.part;})){
+        var ent={date:iso,label:nd.label||"休"};
+        if(nd.part!=="all") ent.part=nd.part;
+        s.closed.push(ent);
+      }
+      cur=addDays(cur,1);
+    }
+    s.closed.sort(function(x,y){return x.date<y.date?-1:x.date>y.date?1:0;});
+    adminMsg="";ar(true);
+  }},"新增休息日");
+  return h("article",{class:"acard"},
+    h("div",{class:"fields"},
+      fld("學期名稱",tin(s,"name")),
+      fld("開始日",tin(s,"start",{type:"date"})),
+      fld("結束日",tin(s,"end",{type:"date"}))),
+    h("div",{class:"field"},h("span",{class:"lbl2"},"每週上課日"),wd),
+    h("div",{class:"field"},h("span",{class:"lbl2"},"休息日（國定假日、補習班公休、只上半天的日子）"),cl),
+    h("div",{class:"field"},h("span",{class:"lbl2"},"日期排課：每一天開哪些課（沒改過的日子，平日＝全部上架課程，週末不開）"),dayTable(s)),
+    h("div",{class:"addrow"},
+      h("div",{class:"field"},h("label",{for:fromI.id},"休息起日"),fromI),
+      h("div",{class:"field"},h("label",{for:toI.id},"休息迄日（單日可留空）"),toI),
+      h("div",{class:"field"},h("label",{for:partI.id},"休息範圍"),partI,h("small",null,"最後一天只上半天，就選「只休下午」")),
+      h("div",{class:"field"},h("label",{for:lbI.id},"名稱"),lbI),
+      addBtn),
+    h("div",{class:"arow"},h("span",null),
+      h("button",{type:"button",class:"btn ghost sm"+(armed?" danger":""),disabled:draft.seasons.length<2,onclick:function(){
+        if(armed){draft.seasons=draft.seasons.filter(function(x){return x.id!==s.id;});draft.discounts.forEach(function(r){r.seasons=r.seasons.filter(function(i){return i!==s.id;});});confirmKey=null;ar();}
+        else{confirmKey="s:"+s.id;ar(true);}
+      }},armed?"再按一次確認刪除":"刪除學期")));
+}
+function adminSeasons(){
+  var box=h("div",{class:"apanel"});
+  box.appendChild(h("section",{class:"agroup"},
+    h("div",{class:"head"},h("h2",null,"學期與日期（"+draft.seasons.length+"）"),
+      h("button",{type:"button",class:"btn ghost sm",onclick:function(){draft.seasons.push({id:gid("s"),name:"新學期",start:"",end:"",weekdays:[1,2,3,4,5],closed:[],days:{}});ar();}},"＋ 新增學期")),
+    h("div",{class:"cards"},draft.seasons.map(seasonCard))));
+  return box;
+}
+function compressImage(file,cb){
+  var fr=new FileReader();
+  fr.onerror=function(){cb(null);};
+  fr.onload=function(){
+    var img=new Image();
+    img.onerror=function(){cb(null);};
+    img.onload=function(){
+      var tries=[[1600,.8],[1400,.72],[1200,.65],[1000,.58]],i=0;
+      (function step(){
+        var t=tries[i],r=Math.min(1,t[0]/img.width);
+        var w=Math.max(1,Math.round(img.width*r)),hh=Math.max(1,Math.round(img.height*r));
+        var cv=document.createElement("canvas");cv.width=w;cv.height=hh;
+        var cx=cv.getContext("2d");
+        if(!cx){cb(null);return;}
+        cx.fillStyle="#fff";cx.fillRect(0,0,w,hh);cx.drawImage(img,0,0,w,hh);
+        var url=cv.toDataURL("image/jpeg",t[1]);
+        if(url.length<=450000||i===tries.length-1){cb(url.length<=900000?url:null);}
+        else{i++;step();}
+      })();
+    };
+    img.src=fr.result;
+  };
+  fr.readAsDataURL(file);
+}
+function bgBlock(sc){
+  var prev=h("div",{class:"bgprev",role:"img","aria-label":"頁首背景圖預覽"},isImg(sc.bgImage)?null:"目前使用預設的棋盤格線");
+  if(isImg(sc.bgImage)) prev.style.backgroundImage='linear-gradient(var(--scrim),var(--scrim)),url("'+sc.bgImage+'")';
+  var fi=h("input",{type:"file",id:"f-school-bgfile",accept:"image/*",onchange:function(){
+    var f=fi.files&&fi.files[0];
+    if(!f) return;
+    if(f.size>20*1024*1024){adminMsg="圖片超過 20MB，請換小一點的圖。";render();return;}
+    adminMsg="圖片處理中…";render();
+    compressImage(f,function(url){
+      if(!url){adminMsg="這張圖片無法使用，請換一張 JPG 或 PNG。";}
+      else{sc.bgImage=url;adminMsg="已換上新背景圖，記得按「儲存並發布」。";}
+      ar(true);
+    });
+  }});
+  return h("div",{class:"field"},
+    h("label",{for:"f-school-bgfile"},"頁首背景圖"),
+    prev,
+    fi,
+    h("div",{class:"tools"},h("button",{type:"button",class:"btn ghost sm",disabled:!isImg(sc.bgImage),onclick:function(){sc.bgImage="";adminMsg="已移除背景圖，記得按「儲存並發布」。";ar(true);}},"移除背景圖")),
+    h("small",null,"建議用橫式圖片。系統會自動縮小並壓縮，文字上方會加一層淡色遮罩，避免看不清楚。"));
+}
+function adminSettings(){
+  var sc=draft.school;
+  var notes=h("textarea",{id:"f-school-notes",oninput:function(){sc.notes=notes.value.split("\n");}});
+  notes.value=(sc.notes||[]).join("\n");
+  var o=function(k){return {id:"f-school-"+k};};
+  return h("div",{class:"apanel"},h("section",{class:"agroup"},h("div",{class:"head"},h("h2",null,"基本設定")),
+    h("article",{class:"acard"},
+      h("div",{class:"fields"},
+        fld("補習班名稱",tin(sc,"name",o("name"))),
+        fld("頁面標題",tin(sc,"title",o("title")))),
+      fld("簡介（標題下方一句話）",tin(sc,"lead",o("lead"))),
+      bgBlock(sc),
+      h("div",{class:"fields"},
+        fld("上午時間",tin(sc,"amTime",o("amTime")),"例：09:00–12:00"),
+        fld("下午時間",tin(sc,"pmTime",o("pmTime")),"例：13:30–16:30"),
+        fld("上午醒目提醒（選填）",tin(sc,"amNote",o("amNote")),"顯示在「上午」和時間中間，例：棋院早上 07:30 開門，可提早送達"),
+        fld("才藝時間（選填）",tin(sc,"xTime",o("xTime")),"例：16:30–18:30")),
+      fld("洽詢方式",tin(sc,"contact",o("contact")),"顯示在頁面最下方"),
+      fld("注意事項（一行一則）",notes),
+      chk(sc,"demo","顯示「目前是範例資料」提示（正式上線前請取消勾選）"))));
+}
+function adminView(){
+  var wrap=h("div",{class:"wrap admin"});
+  wrap.appendChild(h("header",{class:"top"},h("p",{class:"eyebrow"},"後台管理"),h("h1",null,"編輯課程、優惠與日期"),
+    h("p",{class:"lead"},"修改完成後按「儲存並發布」，家長看到的頁面就會更新。")));
+  var tabs=[["courses","課程"],["discounts","優惠"],["seasons","日期"],["settings","基本設定"]];
+  wrap.appendChild(h("div",{class:"tabs",role:"tablist"},tabs.map(function(t){
+    return h("button",{type:"button",role:"tab",class:"tab","aria-selected":adminTab===t[0]?"true":"false",onclick:function(){adminTab=t[0];adminMsg="";ar();}},t[1]);
+  })));
+  wrap.appendChild(adminTab==="courses"?adminCourses():adminTab==="discounts"?adminDiscounts():adminTab==="seasons"?adminSeasons():adminSettings());
+  wrap.appendChild(h("div",{class:"abar"},
+    h("div",{class:"amsg",role:"status","aria-live":"polite"},adminMsg),
+    h("div",{class:"abtns"},
+      h("button",{type:"button",class:"btn ghost",onclick:leaveAdmin},"放棄修改"),
+      h("button",{type:"button",class:"btn",disabled:adminBusy,onclick:publish},"儲存並發布"))));
+  return wrap;
+}
+function enterAdmin(){
+  if(!getPw()){state.mode="login";render();window.scrollTo(0,0);return;}
+  draft=JSON.parse(JSON.stringify(cfg));
+  state.mode="admin";adminTab="courses";adminMsg="";confirmKey=null;
+  render();window.scrollTo(0,0);
+}
+function leaveAdmin(){state.mode="view";draft=null;adminMsg="";render();window.scrollTo(0,0);}
+
+function num(v){v=Number(v);return isFinite(v)&&v>0?v:0;}
+function clean(c){
+  var o=JSON.parse(JSON.stringify(c));
+  var sc=o.school;
+  ["name","title","lead","amTime","pmTime","xTime","amNote","contact","planCustom"].forEach(function(k){sc[k]=String(sc[k]||"").trim();});
+  sc.bgImage=isImg(sc.bgImage)?sc.bgImage:"";
+  sc.notes=(sc.notes||[]).map(function(x){return String(x).trim();}).filter(Boolean);
+  o.courses.forEach(function(x){
+    x.name=String(x.name||"").trim();
+    x.short=String(x.short||x.name).trim().slice(0,2);
+    x.price=num(x.price);x.materialAmount=num(x.materialAmount);
+    x.materialName=String(x.materialName||"").trim();
+    if(["once","each","custom"].indexOf(x.materialMode)<0) x.materialMode="once";
+    x.materialEvery=Math.max(1,Math.floor(num(x.materialEvery)||1));
+    x.slotCustom=!!x.slotCustom;x.timeText=String(x.timeText||"").trim().slice(0,30);
+    if(SLOTS.indexOf(x.slot)<0) x.slot="am";
+  });
+  o.seasons.forEach(function(s){
+    s.name=String(s.name||"").trim();
+    s.weekdays=ORDER.filter(function(d){return s.weekdays.indexOf(d)>=0;});
+    s.closed=s.closed.filter(function(c1){return parseD(c1.date);}).map(function(c1){
+      if(c1.part!=="am"&&c1.part!=="pm"&&c1.part!=="x") delete c1.part;
+      return c1;
+    }).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0;});
+    var cids=o.courses.map(function(x){return x.id;});
+    var days={};
+    Object.keys(s.days||{}).forEach(function(iso){
+      if(!parseD(iso)) return;
+      var e=s.days[iso]||{},ne={};
+      SLOTS3.forEach(function(sl){ne[sl]=(e[sl]||[]).filter(function(id){return cids.indexOf(id)>=0;});});
+      ne.note=String(e.note||"").trim();if(e.xFirst) ne.xFirst=true;
+      days[iso]=ne;
+    });
+    s.days=days;
+  });
+  var ids=o.seasons.map(function(s){return s.id;});
+  o.discounts.forEach(function(r){
+    r.name=String(r.name||"").trim();r.value=num(r.value);r.min=num(r.min)||(r.type==="fullday"?1:r.min);
+    r.note=String(r.note||"").trim();
+    r.plan=r.plan==="kyu"||r.plan==="dan"||r.plan==="cust"?r.plan:"all";
+    if(r.type==="custom"){r.needCheck=!!r.needCheck;r.min=Math.floor(num(r.min));}
+    r.seasons=(r.seasons||[]).filter(function(i){return ids.indexOf(i)>=0;});
+    if(r.type==="share"){r.until=String(r.until||"");}
+    if((r.type==="tier"||r.type==="share")){
+      r.shareText=String(r.shareText||"").trim()||"分享貼文";
+      r.scope=r.scope==="core"?"core":"all";
+      r.until=String(r.until||"");
+      r.tiers=(r.tiers||[]).map(function(t){
+        return {label:String(t.label||"").trim(),minDays:Math.floor(num(t.minDays)),zhe:num(t.zhe),share:num(t.share)};
+      }).sort(function(a,b){return a.minDays-b.minDays;});
+    }
+  });
+  return o;
+}
+function validate(c){
+  var e=[];
+  if(!c.school.name) e.push("請填補習班名稱");
+  if(!c.seasons.length) e.push("至少需要一個學期");
+  c.seasons.forEach(function(s){
+    if(!s.name) e.push("有學期沒有名稱");
+    if(!parseD(s.start)||!parseD(s.end)||s.start>s.end) e.push("「"+(s.name||"未命名")+"」的開始日與結束日不正確");
+    if(!s.weekdays.length) e.push("「"+(s.name||"未命名")+"」至少要選一個上課星期");
+  });
+  c.courses.forEach(function(x){
+    if(!x.name) e.push("有課程沒有名稱");
+    if(x.enabled&&x.price<0) e.push("「"+x.name+"」的學費不能小於 0");
+  });
+  if(!c.courses.some(function(x){return x.enabled&&(x.slot==="am"||x.slot==="pm"||x.slot==="ampm");})) e.push("至少要有一門上架的上午或下午課程");
+  if(c.discounts.some(function(r){return r.enabled&&r.plan==="cust";})&&!c.school.planCustom) e.push("請填「自訂身分」的名稱");
+  c.discounts.forEach(function(r){
+    if(!r.name) e.push("有優惠沒有名稱");
+    if((r.type==="tier"||r.type==="share")){
+      if(!r.enabled) return;
+      if(!r.tiers.length) e.push("「"+r.name+"」至少要有一段");
+      var seen={};
+      r.tiers.forEach(function(t){
+        if(!t.label) e.push("「"+r.name+"」有一段沒有名稱");
+        if(t.zhe>=10) e.push("「"+r.name+"」的折數要小於 10（0 = 不打折）");
+        if(seen[t.minDays]) e.push("「"+r.name+"」有兩段的天數起點相同（"+t.minDays+" 天）");
+        seen[t.minDays]=1;
+      });
+      if(r.until&&!parseD(r.until)) e.push("「"+r.name+"」的截止日不正確");
+      return;
+    }
+    if(r.enabled&&r.value<=0) e.push("「"+r.name+"」的折數或金額要大於 0");
+    if(r.enabled&&r.kind==="zhe"&&r.value>=10) e.push("「"+r.name+"」的折數要小於 10");
+    if(r.enabled&&r.type==="earlybird"&&!parseD(r.until)) e.push("「"+r.name+"」請選截止日");
+  });
+  return e;
+}
+function loginView(){
+  var wrap=h("div",{class:"wrap"});
+  var pw=h("input",{type:"password",id:"admin-pw",autocomplete:"current-password","data-fk":"pw"});
+  var msg=h("p",{class:"fine",role:"status"},"");
+  var btn=h("button",{type:"submit",class:"btn"},"登入");
+  var form=h("form",{class:"acard",onsubmit:function(e){
+    e.preventDefault();
+    var v=pw.value;
+    if(!v){msg.textContent="請輸入密碼。";return;}
+    btn.disabled=true;msg.textContent="驗證中…";
+    api("/api/login",{password:v}).then(function(j){
+      btn.disabled=false;
+      if(j&&j.ok){setPw(v);enterAdmin();}
+      else if(j&&j._status===503) msg.textContent="後台尚未設定完成（缺少密碼或資料儲存），請聯絡網站開發者。";
+      else msg.textContent="密碼不正確。";
+    },function(){btn.disabled=false;msg.textContent="連線失敗，請稍後再試。";});
+  }},
+    h("h2",null,"後台登入"),
+    h("div",{class:"field"},h("label",{for:"admin-pw"},"後台密碼"),pw),
+    msg,
+    h("div",{class:"arow"},h("button",{type:"button",class:"btn ghost",onclick:function(){state.mode="view";render();window.scrollTo(0,0);}},"返回"),btn));
+  wrap.appendChild(h("header",{class:"top"},h("p",{class:"eyebrow"},cfg.school.name),h("h1",null,"編輯內容（後台）")));
+  wrap.appendChild(h("div",{style:"max-width:420px;margin-top:16px"},form));
+  return wrap;
+}
+function publish(){
+  if(adminBusy) return;
+  var c=clean(draft),errs=validate(c);
+  if(errs.length){adminMsg=errs.join("；");render();return;}
+  adminBusy=true;adminMsg="發布中…";render();
+  api("/api/save",{password:getPw(),config:c}).then(function(j){
+    if(j&&j.ok){cfg=c;adminMsg="已發布，家長端重新整理後就會看到。";}
+    else if(j&&j._status===401){setPw("");adminMsg="密碼錯誤或已失效，請按「放棄修改」後重新登入。";}
+    else if(j&&j._status===503) adminMsg="後台尚未設定完成（缺少密碼或資料儲存），請聯絡網站開發者。";
+    else adminMsg="發布失敗，請稍後再試。";
+  },function(){adminMsg="連線失敗，請稍後再試。";}).then(function(){adminBusy=false;render();});
+}
+
+/* ---------- 繪製 ---------- */
+function render(){
+  DMC={};
+  if(state.plan==="cust"&&!cfg.school.planCustom) state.plan="kyu";
+  var ae=document.activeElement,fk=null,fi=null;
+  if(ae&&app.contains(ae)){fk=ae.getAttribute("data-fk");fi=ae.id||null;}
+  app.textContent="";
+  app.appendChild(state.mode==="admin"?adminView():state.mode==="login"?loginView():publicView());
+  var el=null;
+  if(fk){var all=app.querySelectorAll("[data-fk]");for(var i=0;i<all.length;i++) if(all[i].getAttribute("data-fk")===fk){el=all[i];break;}}
+  else if(fi) el=document.getElementById(fi);
+  if(el&&el.focus) el.focus({preventScroll:true});
+}
+function applyRemote(j){
+  var c=j&&j.config;
+  if(c&&c.school&&Array.isArray(c.seasons)&&Array.isArray(c.courses)&&Array.isArray(c.discounts)) cfg=c;
+}
+function init(){
+  var started=false;
+  function start(){
+    if(started) return;
+    started=true;
+    state.season=cfg.seasons[0]?cfg.seasons[0].id:null;
+    render();
+  }
+  app.appendChild(h("p",{class:"empty",style:"padding:40px 16px;text-align:center"},"載入中…"));
+  var timer=setTimeout(start,4000);
+  api("/api/config").then(function(j){
+    applyRemote(j);
+    clearTimeout(timer);
+    if(!started) start();
+    else if(state.mode==="view"){
+      if(!cfg.seasons.some(function(s){return s.id===state.season;})) state.season=cfg.seasons[0]?cfg.seasons[0].id:null;
+      render();
+    }
+  },function(){clearTimeout(timer);start();});
+}
+init();
+})();
+</script></body></html>

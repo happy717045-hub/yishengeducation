@@ -1,0 +1,8 @@
+{
+  "name": "yishengeducation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "弈生圍棋教室 寒暑假課程費用試算",
+  "engines": { "node": ">=18" },
+  "scripts": { "dev": "node scripts/dev-server.js" }
+}
