@@ -5,10 +5,20 @@ const crypto = require("crypto");
 const KEY = "yisheng:config";
 const PREV_KEY = "yisheng:config:prev";
 
+function pickEnv(suffixes) {
+  const names = Object.keys(process.env);
+  for (const suf of suffixes) {
+    const hit = names.find((n) => n.endsWith(suf) && process.env[n]);
+    if (hit) return process.env[hit];
+  }
+  return undefined;
+}
+/* Vercel 的 Upstash 整合會建立 KV_REST_API_URL / KV_REST_API_TOKEN（有自訂前綴時名稱前面會多一段），
+   這裡用「結尾符合」的方式找，前綴不同也能用；唯讀金鑰（READ_ONLY）不算。 */
 function storeEnv() {
   return {
-    url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN,
+    url: pickEnv(["KV_REST_API_URL", "UPSTASH_REDIS_REST_URL"]),
+    token: pickEnv(["KV_REST_API_TOKEN", "UPSTASH_REDIS_REST_TOKEN"]),
   };
 }
 function storeReady() {
